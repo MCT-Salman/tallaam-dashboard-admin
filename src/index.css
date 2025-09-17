@@ -271,17 +271,25 @@ body {
   }
   
   .phone-field-container .country-selector {
-    flex-shrink: 0;
-    border-left: none;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    height: 100%;
-    min-height: 2.75rem;
+    width: 100%;
+    padding: 0.55rem 1rem !important;
+    border-radius: 0.3rem;
+    /* border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem; */
+    border: 1px solid hsl(var(--input));
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    transition: var(--transition-smooth);
+  }
+  
+  .phone-field-container .country-selector:hover {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   }
   
   .phone-field-container .phone-input {
     flex-grow: 1;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    height: 2.75rem;
   }
 }
