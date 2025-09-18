@@ -1,3 +1,4 @@
+// src\components\layout\Header.jsx
 import { Bell, Search, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -13,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export function Header() {
   return (
-    <header className="bg-card border-b border-border px-6 py-4">
+    <header className="bg-card border-b border-border px-6 py-4 sticky top-0 z-40 sm:top-20 lg:top-0">
       <div className="flex items-center justify-between">
         {/* Search */}
         <div className="flex-1 max-w-md">

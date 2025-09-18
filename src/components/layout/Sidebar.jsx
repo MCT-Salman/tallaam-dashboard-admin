@@ -1,3 +1,4 @@
+// src\components\layout\Sidebar.jsx
 import { Link, useLocation } from "react-router-dom"
 import {
   Home,
@@ -10,7 +11,14 @@ import {
   LogOut,
   Menu,
   X,
-  GraduationCap
+  GraduationCap,
+  DollarSign,
+  Megaphone,
+  Percent,
+  UserCheck,
+  MessageSquare,
+  Link as LinkIcon,
+  FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -22,19 +30,49 @@ const sidebarItems = [
     icon: Home
   },
   {
-    title: "الدورات",
-    href: "/courses",
+    title: "إدارة الدورات",
+    href: "/admin/courses",
     icon: BookOpen
   },
   {
-    title: "الطلاب",
-    href: "/students",
+    title: "إدارة الطلاب",
+    href: "/admin/students",
     icon: Users
   },
   {
-    title: "التقارير",
-    href: "/reports",
+    title: "إدارة المبيعات",
+    href: "/admin/sales",
+    icon: DollarSign
+  },
+  {
+    title: "الإدارة المالية",
+    href: "/admin/financial",
     icon: BarChart3
+  },
+  {
+    title: "إدارة الإعلانات",
+    href: "/admin/ads",
+    icon: Megaphone
+  },
+  {
+    title: "كوبونات الخصم",
+    href: "/admin/coupons",
+    icon: Percent
+  },
+  {
+    title: "المدراء الفرعيين",
+    href: "/admin/sub-admins",
+    icon: UserCheck
+  },
+  {
+    title: "المقترحات",
+    href: "/admin/suggestions",
+    icon: MessageSquare
+  },
+  {
+    title: "التحقق من الروابط",
+    href: "/admin/link-verification",
+    icon: LinkIcon
   },
   {
     title: "الإشعارات",
@@ -59,40 +97,38 @@ export function Sidebar({ collapsed, onToggle }) {
   return (
     <div
       className={cn(
-        "bg-card border-l border-border transition-all duration-300 flex flex-col",
-        collapsed ? "w-16" : "w-64"
+        "bg-card border-l border-border transition-all duration-300 flex flex-col fixed top-0 right-0 h-screen z-50",
+        "lg:border-l md:border-l sm:border-b sm:border-l-0",
+        "sm:w-full sm:h-auto sm:right-0 sm:left-0",
+        "lg:w-64 md:w-64 sm:w-full",
+        collapsed ? "lg:w-16 md:w-16 sm:w-full" : "lg:w-64 md:w-64 sm:w-full"
       )}
     >
-      {/* Header */}
-      <div className="p-4 border-b border-border">
+      {/* Header - Fixed */}
+      <div className="p-4 border-b border-border flex-shrink-0">
         <div className="flex items-center justify-between">
-          {!collapsed && (
-            <div className="flex items-center gap-3">
-              <img 
-                src="/tallaam_logo.png" 
-                alt="تعلّم" 
-                className="w-10 h-10 object-contain"
-              />
-              <span className="font-bold text-xl text-primary">تعلّم</span>
-            </div>
-          )}
-          {/* {collapsed && (
-            <div className="flex justify-center">
-              <img 
-                src="/tallaam_logo.png" 
-                alt="تعلّم" 
-                className="w-8 h-8 object-contain"
-              />
-            </div>
-          )} */}
+          <div className="flex items-center gap-3">
+            {!collapsed && (<><img
+              src="/tallaam_logo2.png"
+              alt="تعلّم"
+              className="w-10 h-10 object-contain"
+            />
+              <span className="font-bold text-xl text-primary block " >تعلّم</span></>
+            )}
+
+          </div>
           <Button
             variant="ghost"
             size="icon"
             onClick={onToggle}
-            className="hover:bg-accent"
+            className="hover:bg-accent "
           >
             {collapsed ? (
-              <Menu className="w-5 h-5" />
+              <img
+                src="/tallaam_logo2.png"
+                alt="تعلّم"
+                className="w-10 h-10 object-contain"
+              />
             ) : (
               <X className="w-5 h-5" />
             )}
@@ -100,8 +136,8 @@ export function Sidebar({ collapsed, onToggle }) {
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-4 space-y-2">
+      {/* Navigation - Scrollable */}
+      <nav className="flex-1 p-4 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent hover:scrollbar-thumb-primary max-h-[calc(100vh-150px)] lg:max-h-[calc(100vh-150px)]">
         {sidebarItems.map(item => {
           const isActive = location.pathname === item.href
           const Icon = item.icon
@@ -115,27 +151,29 @@ export function Sidebar({ collapsed, onToggle }) {
                 isActive
                   ? "bg-primary text-primary-foreground shadow-md"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent",
-                collapsed && "justify-center"
+                collapsed && "justify-center lg:justify-center"
               )}
             >
+
               <Icon className="w-5 h-5 flex-shrink-0" />
-              {!collapsed && <span>{item.title}</span>}
+              {!collapsed && <span className="block">{item.title}</span>}
             </Link>
           )
         })}
       </nav>
 
-      {/* Footer */}
-      <div className="p-4 border-t border-border">
+      {/* Footer - Fixed */}
+      <div className="p-4 border-t border-border flex-shrink-0">
         <Button
           variant="ghost"
           className={cn(
             "w-full justify-start gap-3 text-muted-foreground hover:text-foreground hover:bg-accent",
-            collapsed && "justify-center"
+            collapsed && "justify-center lg:justify-center"
           )}
         >
           <LogOut className="w-5 h-5 flex-shrink-0" />
-          {!collapsed && <span>تسجيل الخروج</span>}
+          {!collapsed && <span className="block">تسجيل الخروج</span>}
+
         </Button>
       </div>
     </div>

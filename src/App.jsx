@@ -1,3 +1,4 @@
+// src\App.jsx
 import { Toaster } from "@/components/ui/toaster"
 import { Toaster as Sonner } from "@/components/ui/sonner"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -13,6 +14,17 @@ import Reports from "./pages/Reports"
 import Notifications from "./pages/Notifications"
 import Profile from "./pages/Profile"
 import Settings from "./pages/Settings"
+
+// Admin Pages
+import CourseManagement from "./pages/admin/CourseManagement"
+import StudentManagement from "./pages/admin/StudentManagement"
+import SalesManagement from "./pages/admin/SalesManagement"
+import FinancialManagement from "./pages/admin/FinancialManagement"
+import AdsManagement from "./pages/admin/AdsManagement"
+import CouponManagement from "./pages/admin/CouponManagement"
+import SubAdminManagement from "./pages/admin/SubAdminManagement"
+import SuggestionsManagement from "./pages/admin/SuggestionsManagement"
+import LinkVerification from "./pages/admin/LinkVerification"
 import './app.css'
 
 const queryClient = new QueryClient()
@@ -34,6 +46,80 @@ const App = () => (
               </DashboardLayout>
             }
           />
+          {/* Admin Routes */}
+          <Route
+            path="/admin/courses"
+            element={
+              <DashboardLayout>
+                <CourseManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/students"
+            element={
+              <DashboardLayout>
+                <StudentManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/sales"
+            element={
+              <DashboardLayout>
+                <SalesManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/financial"
+            element={
+              <DashboardLayout>
+                <FinancialManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/ads"
+            element={
+              <DashboardLayout>
+                <AdsManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/coupons"
+            element={
+              <DashboardLayout>
+                <CouponManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/sub-admins"
+            element={
+              <DashboardLayout>
+                <SubAdminManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/suggestions"
+            element={
+              <DashboardLayout>
+                <SuggestionsManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/link-verification"
+            element={
+              <DashboardLayout>
+                <LinkVerification />
+              </DashboardLayout>
+            }
+          />
+          {/* Legacy Routes */}
           <Route
             path="/courses"
             element={
