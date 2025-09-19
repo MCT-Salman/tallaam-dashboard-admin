@@ -23,7 +23,7 @@ export function DashboardLayout({ children }) {
           sidebarCollapsed ? "lg:mr-16 md:mr-16 sm:mr-0" : "lg:mr-64 md:mr-64 sm:mr-0"
         )}
       >
-        <Header />
+        <Header sidebarCollapsed={sidebarCollapsed} />
 
         {/* Page content */}
         <main className="flex-1 p-6 overflow-auto pt-6">{children}</main>
