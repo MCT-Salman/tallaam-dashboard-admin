@@ -12,7 +12,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'cairo': ['Cairo', 'sans-serif'],
+        'alqabas': ['Alqabas', 'sans-serif'],
+        'sans': ['Alqabas', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
