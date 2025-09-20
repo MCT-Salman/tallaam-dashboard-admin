@@ -13,7 +13,18 @@ import {
   Video,
   ChevronDown,
   ChevronRight,
-  Settings
+  Settings,
+  Search,
+  Filter,
+  MoreHorizontal,
+  CheckSquare,
+  Square,
+  AlertTriangle,
+  Eye,
+  EyeOff,
+  Copy,
+  Download,
+  RefreshCw
 } from "lucide-react"
 import {
   Card,
@@ -56,6 +67,25 @@ import {
   CollapsibleContent,
   CollapsibleTrigger
 } from "@/components/ui/collapsible"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle
+} from "@/components/ui/alert-dialog"
+import { Checkbox } from "@/components/ui/checkbox"
 import { useAppSettings } from "@/contexts/AppSettingsContext"
 
 export default function EnhancedCourseManagement() {
@@ -76,66 +106,56 @@ export default function EnhancedCourseManagement() {
   // FX rate for displaying SYP/USD conversion from app settings
   const { usdToSyp } = useAppSettings();
 
-  // Initial mock data
-  const [domains, setDomains] = useState([
-    { id: 1, name: "تقنية المعلومات", isActive: true },
-    { id: 2, name: "الهندسة", isActive: true },
-    { id: 3, name: "العلوم الطبية", isActive: true }
-  ])
-
+  // Initial mock data - New Structure: Specialization → Subject → Instructor → Level → Lessons
   const [specializations, setSpecializations] = useState([
-    { id: 1, name: "علوم الحاسوب", domainId: 1, isActive: true },
-    { id: 2, name: "أمن المعلومات", domainId: 1, isActive: true },
-    { id: 3, name: "هندسة مدنية", domainId: 2, isActive: true }
+    { id: 1, name: "معلوماتية", isActive: true },
+    { id: 2, name: "هندسة", isActive: true },
+    { id: 3, name: "طب", isActive: true }
   ])
 
   const [subjects, setSubjects] = useState([
-    { id: 1, name: "البرمجة", specializationId: 1, isActive: true },
-    { id: 2, name: "قواعد البيانات", specializationId: 1, isActive: true },
-    { id: 3, name: "الشبكات", specializationId: 2, isActive: true }
+    { id: 1, name: "لغة C#", specializationId: 1, isActive: true },
+    { id: 2, name: "Python", specializationId: 1, isActive: true },
+    { id: 3, name: "JavaScript", specializationId: 1, isActive: true },
+    { id: 4, name: "هندسة مدنية", specializationId: 2, isActive: true },
+    { id: 5, name: "تشريح", specializationId: 3, isActive: true }
   ])
 
   const [instructors, setInstructors] = useState([
-    { id: 1, name: "د. أحمد محمد", bio: "أستاذ علوم الحاسوب", isActive: true },
-    { id: 2, name: "د. فاطمة أحمد", bio: "أستاذ أمن المعلومات", isActive: true },
-    { id: 3, name: "د. محمد علي", bio: "أستاذ الهندسة", isActive: true }
+    { id: 1, name: "محمد أحمد", bio: "مطور تطبيقات C#", subjectId: 1, isActive: true },
+    { id: 2, name: "فاطمة علي", bio: "مطورة Python", subjectId: 2, isActive: true },
+    { id: 3, name: "أحمد محمد", bio: "مطور JavaScript", subjectId: 3, isActive: true },
+    { id: 4, name: "سارة حسن", bio: "مهندسة مدنية", subjectId: 4, isActive: true },
+    { id: 5, name: "د. خالد", bio: "طبيب", subjectId: 5, isActive: true }
   ])
 
   const [courses, setCourses] = useState([
     {
       id: 1,
-      title: "أساسيات البرمجة",
-      description: "دورة شاملة لتعلم أساسيات البرمجة",
-      price: 50,
-      currency: "USD",
+      title: "C# للمبتدئين",
+      description: "دورة شاملة لتعلم لغة C# من الصفر",
+      price: 50000,
+      currency: "SYP",
       isFree: false,
+      specializationId: 1,
       subjectId: 1,
+      instructorId: 1,
       isActive: true,
-      instructorIds: [1],
       createdAt: "2024-01-15"
     }
   ])
-  // Toggle active status
-  const toggleDomainStatus = (id) => {
-    setDomains(domains.map(d => d.id === id ? { ...d, isActive: !d.isActive } : d))
-  }
+  // Toggle active status - Updated for new structure
   const toggleSpecializationStatus = (id) => {
     setSpecializations(specializations.map(s => s.id === id ? { ...s, isActive: !s.isActive } : s))
   }
   const toggleSubjectStatus = (id) => {
     setSubjects(subjects.map(s => s.id === id ? { ...s, isActive: !s.isActive } : s))
   }
-
-  // Delete with child checks
-  const deleteDomain = (id) => {
-    const hasChildren = specializations.some(s => s.domainId === id)
-    if (hasChildren) {
-      showToast("لا يمكن الحذف", "يوجد اختصاصات تابعة لهذا المجال", "destructive")
-      return
-    }
-    setDomains(domains.filter(d => d.id !== id))
-    showToast("تم الحذف", "تم حذف المجال")
+  const toggleInstructorStatus = (id) => {
+    setInstructors(instructors.map(i => i.id === id ? { ...i, isActive: !i.isActive } : i))
   }
+
+  // Delete with child checks - Updated for new structure
   const deleteSpecialization = (id) => {
     const hasChildren = subjects.some(s => s.specializationId === id)
     if (hasChildren) {
@@ -146,48 +166,53 @@ export default function EnhancedCourseManagement() {
     showToast("تم الحذف", "تم حذف الاختصاص")
   }
   const deleteSubject = (id) => {
-    const usedByCourse = courses.some(c => c.subjectId === id)
-    if (usedByCourse) {
-      showToast("لا يمكن الحذف", "توجد دورات مرتبطة بهذه المادة", "destructive")
+    const hasInstructors = instructors.some(i => i.subjectId === id)
+    if (hasInstructors) {
+      showToast("لا يمكن الحذف", "يوجد مدرسين مرتبطين بهذه المادة", "destructive")
       return
     }
     setSubjects(subjects.filter(s => s.id !== id))
     showToast("تم الحذف", "تم حذف المادة")
   }
-
-  // Open edit dialogs
-  const openEditDomain = (domain) => {
-    setEditDomainForm({ id: domain.id, name: domain.name })
-    setDialogs(prev => ({ ...prev, editDomain: true }))
+  const deleteInstructor = (id) => {
+    const hasCourses = courses.some(c => c.instructorId === id)
+    if (hasCourses) {
+      showToast("لا يمكن الحذف", "يوجد دورات مرتبطة بهذا المدرس", "destructive")
+      return
+    }
+    setInstructors(instructors.filter(i => i.id !== id))
+    showToast("تم الحذف", "تم حذف المدرس")
   }
+
+  // Open edit dialogs - Updated for new structure
   const openEditSpecialization = (spec) => {
-    setEditSpecializationForm({ id: spec.id, name: spec.name, domainId: spec.domainId.toString() })
+    setEditSpecializationForm({ id: spec.id, name: spec.name })
     setDialogs(prev => ({ ...prev, editSpecialization: true }))
   }
   const openEditSubject = (subj) => {
     setEditSubjectForm({ id: subj.id, name: subj.name, specializationId: subj.specializationId.toString() })
     setDialogs(prev => ({ ...prev, editSubject: true }))
   }
+  const openEditInstructor = (instructor) => {
+    setInstructorForm({ 
+      id: instructor.id,
+      name: instructor.name, 
+      bio: instructor.bio || "", 
+      avatarUrl: instructor.avatarUrl || "",
+      subjectId: instructor.subjectId.toString()
+    })
+    setDialogs(prev => ({ ...prev, editInstructor: true }))
+  }
 
-  // Save edits
-  const handleUpdateDomain = () => {
-    if (!editDomainForm.name.trim()) {
+  // Save edits - Updated for new structure
+  const handleUpdateSpecialization = () => {
+    if (!editSpecializationForm.name.trim()) {
       showToast("خطأ", "يرجى إدخال الاسم", "destructive")
       return
     }
-    setDomains(domains.map(d => d.id === editDomainForm.id ? { ...d, name: editDomainForm.name.trim() } : d))
-    setDialogs(prev => ({ ...prev, editDomain: false }))
-    setEditDomainForm({ id: null, name: "" })
-    showToast("تم التحديث", "تم تعديل المجال")
-  }
-  const handleUpdateSpecialization = () => {
-    if (!editSpecializationForm.name.trim() || !editSpecializationForm.domainId) {
-      showToast("خطأ", "اختر المجال وأدخل الاسم", "destructive")
-      return
-    }
-    setSpecializations(specializations.map(s => s.id === editSpecializationForm.id ? { ...s, name: editSpecializationForm.name.trim(), domainId: parseInt(editSpecializationForm.domainId) } : s))
+    setSpecializations(specializations.map(s => s.id === editSpecializationForm.id ? { ...s, name: editSpecializationForm.name.trim() } : s))
     setDialogs(prev => ({ ...prev, editSpecialization: false }))
-    setEditSpecializationForm({ id: null, name: "", domainId: "" })
+    setEditSpecializationForm({ id: null, name: "" })
     showToast("تم التحديث", "تم تعديل الاختصاص")
   }
   const handleUpdateSubject = () => {
@@ -203,14 +228,15 @@ export default function EnhancedCourseManagement() {
 
 
   const [courseLevels, setCourseLevels] = useState([
-    { id: 1, name: "المستوى الأول", order: 1, courseId: 1, isActive: true }
+    { id: 1, name: "مستوى أول", order: 1, courseId: 1, instructorId: 1, isActive: true },
+    { id: 2, name: "مستوى ثاني", order: 2, courseId: 1, instructorId: 1, isActive: true }
   ])
 
   const [lessons, setLessons] = useState([
     {
       id: 1,
-      title: "مقدمة في البرمجة",
-      description: "درس تمهيدي",
+      title: "مقدمة في C#",
+      description: "درس تمهيدي عن لغة C#",
       youtubeUrl: "https://youtube.com/watch?v=example1",
       youtubeId: "example1",
       durationSec: 3600,
@@ -218,7 +244,22 @@ export default function EnhancedCourseManagement() {
       isFreePreview: true,
       isActive: true,
       courseId: 1,
-      courseLevelId: 1
+      courseLevelId: 1,
+      instructorId: 1
+    },
+    {
+      id: 2,
+      title: "أنواع البيانات في C#",
+      description: "تعلم أنواع البيانات الأساسية",
+      youtubeUrl: "https://youtube.com/watch?v=example2",
+      youtubeId: "example2",
+      durationSec: 2700,
+      orderIndex: 2,
+      isFreePreview: false,
+      isActive: true,
+      courseId: 1,
+      courseLevelId: 1,
+      instructorId: 1
     }
   ])
 
@@ -237,20 +278,32 @@ export default function EnhancedCourseManagement() {
     addSubject: false,
     editDomain: false,
     editSpecialization: false,
-    editSubject: false
+    editSubject: false,
+    bulkDelete: false,
+    bulkToggle: false
   })
 
-  // Form states
+  // Search and filter states
+  const [searchTerm, setSearchTerm] = useState("")
+  const [filterStatus, setFilterStatus] = useState("all") // all, active, inactive
+  const [filterDomain, setFilterDomain] = useState("all")
+  const [selectedItems, setSelectedItems] = useState([])
+  const [showFilters, setShowFilters] = useState(false)
+
+  // Bulk operations
+  const [bulkAction, setBulkAction] = useState("")
+  const [bulkTarget, setBulkTarget] = useState("")
+
+  // Form states - Updated for new structure
   const [courseForm, setCourseForm] = useState({
     title: "",
     description: "",
     price: "",
     currency: "SYP",
     isFree: false,
-    domainId: "",
     specializationId: "",
     subjectId: "",
-    instructorIds: []
+    instructorId: ""
   })
 
   const [levelForm, setLevelForm] = useState({
@@ -270,18 +323,15 @@ export default function EnhancedCourseManagement() {
   })
 
   const [instructorForm, setInstructorForm] = useState({
+    id: null,
     name: "",
     bio: "",
-    avatarUrl: ""
-  })
-
-  const [domainForm, setDomainForm] = useState({
-    name: ""
+    avatarUrl: "",
+    subjectId: ""
   })
 
   const [specializationForm, setSpecializationForm] = useState({
-    name: "",
-    domainId: ""
+    name: ""
   })
 
   const [subjectForm, setSubjectForm] = useState({
@@ -289,26 +339,24 @@ export default function EnhancedCourseManagement() {
     specializationId: ""
   })
 
-  // Edit forms for taxonomy
-  const [editDomainForm, setEditDomainForm] = useState({ id: null, name: "" })
-  const [editSpecializationForm, setEditSpecializationForm] = useState({ id: null, name: "", domainId: "" })
+  // Edit forms for taxonomy - Updated for new structure
+  const [editSpecializationForm, setEditSpecializationForm] = useState({ id: null, name: "" })
   const [editSubjectForm, setEditSubjectForm] = useState({ id: null, name: "", specializationId: "" })
 
   const [editingItem, setEditingItem] = useState(null)
   const [expandedCourses, setExpandedCourses] = useState({})
 
-  // Helper functions
-  const getDomainName = (id) => domains.find(d => d.id === id)?.name || ""
+  // Helper functions - Updated for new structure
   const getSpecializationName = (id) => specializations.find(s => s.id === id)?.name || ""
   const getSubjectName = (id) => subjects.find(s => s.id === id)?.name || ""
   const getInstructorName = (id) => instructors.find(i => i.id === id)?.name || ""
   const getCourseName = (id) => courses.find(c => c.id === id)?.title || ""
   
-  const getFilteredSpecializations = (domainId) => 
-    specializations.filter(s => s.domainId === parseInt(domainId))
-  
   const getFilteredSubjects = (specializationId) => 
     subjects.filter(s => s.specializationId === parseInt(specializationId))
+  
+  const getInstructorsBySubject = (subjectId) => 
+    instructors.filter(i => i.subjectId === parseInt(subjectId))
 
   const getCourseLevels = (courseId) => 
     courseLevels.filter(l => l.courseId === courseId).sort((a, b) => a.order - b.order)
@@ -316,32 +364,19 @@ export default function EnhancedCourseManagement() {
   const getCourseLessons = (courseId, levelId = null) => 
     lessons.filter(l => l.courseId === courseId && (levelId ? l.courseLevelId === levelId : true))
 
-  // Taxonomy creation handlers (mock, in-memory)
-  const handleAddDomain = () => {
-    if (!domainForm.name.trim()) {
-      showToast("خطأ", "يرجى إدخال اسم المجال", "destructive")
-      return
-    }
-    const newDomain = { id: domains.length + 1, name: domainForm.name.trim(), isActive: true }
-    setDomains([...domains, newDomain])
-    setDomainForm({ name: "" })
-    setDialogs(prev => ({ ...prev, addDomain: false }))
-    showToast("تمت الإضافة", "تم إضافة المجال بنجاح")
-  }
-
+  // Taxonomy creation handlers - Updated for new structure
   const handleAddSpecialization = () => {
-    if (!specializationForm.domainId || !specializationForm.name.trim()) {
-      showToast("خطأ", "اختر المجال وأدخل اسم الاختصاص", "destructive")
+    if (!specializationForm.name.trim()) {
+      showToast("خطأ", "يرجى إدخال اسم الاختصاص", "destructive")
       return
     }
     const newSpec = {
       id: specializations.length + 1,
       name: specializationForm.name.trim(),
-      domainId: parseInt(specializationForm.domainId),
       isActive: true
     }
     setSpecializations([...specializations, newSpec])
-    setSpecializationForm({ name: "", domainId: "" })
+    setSpecializationForm({ name: "" })
     setDialogs(prev => ({ ...prev, addSpecialization: false }))
     showToast("تمت الإضافة", "تم إضافة الاختصاص بنجاح")
   }
@@ -363,9 +398,28 @@ export default function EnhancedCourseManagement() {
     showToast("تمت الإضافة", "تم إضافة المادة بنجاح")
   }
 
-  // Course management functions
+  const handleAddInstructor = () => {
+    if (!instructorForm.name.trim() || !instructorForm.subjectId) {
+      showToast("خطأ", "اختر المادة وأدخل اسم المدرس", "destructive")
+      return
+    }
+    const newInstructor = {
+      id: instructors.length + 1,
+      name: instructorForm.name.trim(),
+      bio: instructorForm.bio,
+      avatarUrl: instructorForm.avatarUrl,
+      subjectId: parseInt(instructorForm.subjectId),
+      isActive: true
+    }
+    setInstructors([...instructors, newInstructor])
+    setInstructorForm({ id: null, name: "", bio: "", avatarUrl: "", subjectId: "" })
+    setDialogs(prev => ({ ...prev, addInstructor: false }))
+    showToast("تمت الإضافة", "تم إضافة المدرس بنجاح")
+  }
+
+  // Course management functions - Updated for new structure
   const handleAddCourse = () => {
-    if (!courseForm.title || !courseForm.subjectId || courseForm.instructorIds.length === 0) {
+    if (!courseForm.title || !courseForm.subjectId || !courseForm.instructorId) {
       showToast("خطأ", "يرجى ملء الحقول المطلوبة", "destructive")
       return
     }
@@ -377,8 +431,9 @@ export default function EnhancedCourseManagement() {
       price: parseFloat(courseForm.price) || 0,
       currency: "SYP",
       isFree: courseForm.isFree,
+      specializationId: parseInt(courseForm.specializationId),
       subjectId: parseInt(courseForm.subjectId),
-      instructorIds: courseForm.instructorIds,
+      instructorId: parseInt(courseForm.instructorId),
       isActive: true,
       createdAt: new Date().toISOString().split("T")[0]
     }
@@ -388,9 +443,10 @@ export default function EnhancedCourseManagement() {
     // Create default level
     const defaultLevel = {
       id: courseLevels.length + 1,
-      name: "المستوى الأول",
+      name: "مستوى أول",
       order: 1,
       courseId: newCourse.id,
+      instructorId: parseInt(courseForm.instructorId),
       isActive: true
     }
     setCourseLevels([...courseLevels, defaultLevel])
@@ -401,10 +457,9 @@ export default function EnhancedCourseManagement() {
       price: "",
       currency: "SYP",
       isFree: false,
-      domainId: "",
       specializationId: "",
       subjectId: "",
-      instructorIds: []
+      instructorId: ""
     })
     setDialogs(prev => ({ ...prev, addCourse: false }))
     showToast("تمت الإضافة", "تم إضافة الدورة بنجاح مع المستوى الافتراضي")
@@ -416,13 +471,20 @@ export default function EnhancedCourseManagement() {
       return
     }
 
+    const course = courses.find(c => c.id === parseInt(levelForm.courseId))
+    if (!course) {
+      showToast("خطأ", "الدورة غير موجودة", "destructive")
+      return
+    }
+
     const existingLevels = getCourseLevels(parseInt(levelForm.courseId))
     const nextOrder = existingLevels.length + 1
     const newLevel = {
       id: courseLevels.length + 1,
-      name: levelForm.name?.trim() ? levelForm.name : `المستوى ${nextOrder}`,
+      name: levelForm.name?.trim() ? levelForm.name : `مستوى ${nextOrder}`,
       order: levelForm.order || nextOrder,
       courseId: parseInt(levelForm.courseId),
+      instructorId: course.instructorId,
       isActive: true
     }
 
@@ -453,6 +515,12 @@ export default function EnhancedCourseManagement() {
       return
     }
 
+    const course = courses.find(c => c.id === parseInt(lessonForm.courseId))
+    if (!course) {
+      showToast("خطأ", "الدورة غير موجودة", "destructive")
+      return
+    }
+
     const existingLessons = getCourseLessons(parseInt(lessonForm.courseId), parseInt(lessonForm.courseLevelId))
     let youtubeId = ""
     if (lessonForm.youtubeUrl) {
@@ -471,7 +539,8 @@ export default function EnhancedCourseManagement() {
       isFreePreview: lessonForm.isFreePreview,
       isActive: true,
       courseId: parseInt(lessonForm.courseId),
-      courseLevelId: parseInt(lessonForm.courseLevelId)
+      courseLevelId: parseInt(lessonForm.courseLevelId),
+      instructorId: course.instructorId
     }
 
     setLessons([...lessons, newLesson])
@@ -506,32 +575,14 @@ export default function EnhancedCourseManagement() {
     }, 1000)
   }
 
-  // Instructor management functions
-  const handleAddInstructor = () => {
-    if (!instructorForm.name) {
-      showToast("خطأ", "يرجى إدخال اسم المدرس", "destructive")
-      return
-    }
-
-    const newInstructor = {
-      id: instructors.length + 1,
-      name: instructorForm.name,
-      bio: instructorForm.bio,
-      avatarUrl: instructorForm.avatarUrl,
-      isActive: true
-    }
-
-    setInstructors([...instructors, newInstructor])
-    setInstructorForm({ name: "", bio: "", avatarUrl: "" })
-    setDialogs(prev => ({ ...prev, addInstructor: false }))
-    showToast("تمت الإضافة", "تم إضافة المدرس بنجاح")
-  }
 
   const handleEditInstructor = (instructor) => {
     setInstructorForm({
+      id: instructor.id,
       name: instructor.name,
       bio: instructor.bio || "",
-      avatarUrl: instructor.avatarUrl || ""
+      avatarUrl: instructor.avatarUrl || "",
+      subjectId: instructor.subjectId.toString()
     })
     setEditingItem(instructor)
     setDialogs(prev => ({ ...prev, editInstructor: true }))
@@ -545,47 +596,39 @@ export default function EnhancedCourseManagement() {
               ...i,
               name: instructorForm.name,
               bio: instructorForm.bio,
-              avatarUrl: instructorForm.avatarUrl
+              avatarUrl: instructorForm.avatarUrl,
+              subjectId: parseInt(instructorForm.subjectId)
             }
           : i
       )
     )
     setDialogs(prev => ({ ...prev, editInstructor: false }))
     setEditingItem(null)
-    setInstructorForm({ name: "", bio: "", avatarUrl: "" })
+    setInstructorForm({ id: null, name: "", bio: "", avatarUrl: "", subjectId: "" })
     showToast("تم التحديث", "تم تعديل المدرس بنجاح")
   }
 
   const handleDeleteInstructor = (id) => {
     if (confirm("هل أنت متأكد من حذف هذا المدرس؟")) {
-      setInstructors(instructors.filter(i => i.id !== id))
-      showToast("تم الحذف", "تم حذف المدرس بنجاح")
+      deleteInstructor(id)
     }
   }
 
   const handleToggleInstructorStatus = (id) => {
-    setInstructors(
-      instructors.map(i => (i.id === id ? { ...i, isActive: !i.isActive } : i))
-    )
+    toggleInstructorStatus(id)
   }
 
-  // Course management functions
+  // Course management functions - Updated for new structure
   const handleEditCourse = (course) => {
-    const courseSubject = subjects.find(s => s.id === course.subjectId)
-    const courseSpecialization = specializations.find(s => s.id === courseSubject?.specializationId)
-    const courseDomain = domains.find(d => d.id === courseSpecialization?.domainId)
-    
     setCourseForm({
       title: course.title,
       description: course.description || "",
-      // convert to SYP if stored as USD
-      price: (course.currency === "USD" ? Math.round(course.price * usdToSyp) : course.price).toString(),
+      price: course.price.toString(),
       currency: "SYP",
       isFree: course.isFree,
-      domainId: courseDomain?.id.toString() || "",
-      specializationId: courseSpecialization?.id.toString() || "",
+      specializationId: course.specializationId.toString(),
       subjectId: course.subjectId.toString(),
-      instructorIds: course.instructorIds
+      instructorId: course.instructorId.toString()
     })
     setEditingItem(course)
     setDialogs(prev => ({ ...prev, editCourse: true }))
@@ -602,8 +645,9 @@ export default function EnhancedCourseManagement() {
               price: parseFloat(courseForm.price) || 0,
               currency: "SYP",
               isFree: courseForm.isFree,
+              specializationId: parseInt(courseForm.specializationId),
               subjectId: parseInt(courseForm.subjectId),
-              instructorIds: courseForm.instructorIds
+              instructorId: parseInt(courseForm.instructorId)
             }
           : c
       )
@@ -614,12 +658,11 @@ export default function EnhancedCourseManagement() {
       title: "",
       description: "",
       price: "",
-      currency: "USD",
+      currency: "SYP",
       isFree: false,
-      domainId: "",
       specializationId: "",
       subjectId: "",
-      instructorIds: []
+      instructorId: ""
     })
     showToast("تم التحديث", "تم تعديل الدورة بنجاح")
   }
@@ -704,6 +747,196 @@ export default function EnhancedCourseManagement() {
     showToast("كود شراء", `تم توليد الكود: ${code}`, "default")
   }
 
+  // Search and filter functions - Updated for new structure
+  const getFilteredCourses = () => {
+    let filtered = courses
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(course => 
+        course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getSpecializationName(course.specializationId).toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getSubjectName(course.subjectId).toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getInstructorName(course.instructorId).toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+
+    // Status filter
+    if (filterStatus !== "all") {
+      const isActive = filterStatus === "active"
+      filtered = filtered.filter(course => course.isActive === isActive)
+    }
+
+    // Specialization filter
+    if (filterDomain !== "all") {
+      const specializationId = parseInt(filterDomain)
+      filtered = filtered.filter(course => course.specializationId === specializationId)
+    }
+
+    return filtered
+  }
+
+  const getFilteredLessons = () => {
+    let filtered = lessons
+
+    if (searchTerm) {
+      filtered = filtered.filter(lesson => 
+        lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lesson.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getCourseName(lesson.courseId).toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getInstructorName(lesson.instructorId).toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+
+    return filtered
+  }
+
+  const getFilteredInstructors = () => {
+    let filtered = instructors
+
+    if (searchTerm) {
+      filtered = filtered.filter(instructor => 
+        instructor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        instructor.bio?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        getSubjectName(instructor.subjectId).toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    }
+
+    return filtered
+  }
+
+  // Bulk operations
+  const handleSelectAll = (type) => {
+    let items = []
+    switch (type) {
+      case 'courses':
+        items = getFilteredCourses().map(c => c.id)
+        break
+      case 'lessons':
+        items = getFilteredLessons().map(l => l.id)
+        break
+      case 'instructors':
+        items = getFilteredInstructors().map(i => i.id)
+        break
+    }
+    setSelectedItems(items)
+  }
+
+  const handleSelectItem = (id) => {
+    setSelectedItems(prev => 
+      prev.includes(id) 
+        ? prev.filter(item => item !== id)
+        : [...prev, id]
+    )
+  }
+
+  const handleBulkAction = (action, type) => {
+    if (selectedItems.length === 0) {
+      showToast("خطأ", "يرجى اختيار عناصر للعمل عليها", "destructive")
+      return
+    }
+
+    setBulkAction(action)
+    setBulkTarget(type)
+    setDialogs(prev => ({ ...prev, bulkDelete: true }))
+  }
+
+  const confirmBulkAction = () => {
+    switch (bulkAction) {
+      case 'delete':
+        if (bulkTarget === 'courses') {
+          setCourses(courses.filter(c => !selectedItems.includes(c.id)))
+          setCourseLevels(courseLevels.filter(l => !selectedItems.includes(l.courseId)))
+          setLessons(lessons.filter(l => !selectedItems.includes(l.courseId)))
+        } else if (bulkTarget === 'lessons') {
+          setLessons(lessons.filter(l => !selectedItems.includes(l.id)))
+        } else if (bulkTarget === 'instructors') {
+          selectedItems.forEach(id => deleteInstructor(id))
+        }
+        showToast("تم الحذف", `تم حذف ${selectedItems.length} عنصر`)
+        break
+      case 'activate':
+        if (bulkTarget === 'courses') {
+          setCourses(courses.map(c => 
+            selectedItems.includes(c.id) ? { ...c, isActive: true } : c
+          ))
+        } else if (bulkTarget === 'instructors') {
+          selectedItems.forEach(id => {
+            const instructor = instructors.find(i => i.id === id)
+            if (instructor) {
+              setInstructors(instructors.map(i => 
+                i.id === id ? { ...i, isActive: true } : i
+              ))
+            }
+          })
+        }
+        showToast("تم التفعيل", `تم تفعيل ${selectedItems.length} عنصر`)
+        break
+      case 'deactivate':
+        if (bulkTarget === 'courses') {
+          setCourses(courses.map(c => 
+            selectedItems.includes(c.id) ? { ...c, isActive: false } : c
+          ))
+        } else if (bulkTarget === 'instructors') {
+          selectedItems.forEach(id => {
+            const instructor = instructors.find(i => i.id === id)
+            if (instructor) {
+              setInstructors(instructors.map(i => 
+                i.id === id ? { ...i, isActive: false } : i
+              ))
+            }
+          })
+        }
+        showToast("تم التعطيل", `تم تعطيل ${selectedItems.length} عنصر`)
+        break
+    }
+    setSelectedItems([])
+    setDialogs(prev => ({ ...prev, bulkDelete: false }))
+  }
+
+  const clearFilters = () => {
+    setSearchTerm("")
+    setFilterStatus("all")
+    setFilterDomain("all")
+    setSelectedItems([])
+  }
+
+  const exportData = (type) => {
+    let data = []
+    let filename = ""
+    
+    switch (type) {
+      case 'courses':
+        data = getFilteredCourses()
+        filename = "courses.csv"
+        break
+      case 'lessons':
+        data = getFilteredLessons()
+        filename = "lessons.csv"
+        break
+      case 'instructors':
+        data = getFilteredInstructors()
+        filename = "instructors.csv"
+        break
+    }
+
+    // Simple CSV export
+    const csvContent = data.map(item => 
+      Object.values(item).join(',')
+    ).join('\n')
+    
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    a.click()
+    window.URL.revokeObjectURL(url)
+    
+    showToast("تم التصدير", `تم تصدير ${data.length} عنصر`)
+  }
+
   return (
     <div className="space-y-6 p-6 max-w-7xl mx-auto">
       {/* Header */}
@@ -714,26 +947,87 @@ export default function EnhancedCourseManagement() {
             إدارة شاملة للمجالات والدورات والمستويات والدروس
           </p>
         </div>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowFilters(!showFilters)}>
+            <Filter className="w-4 h-4 ml-2" />
+            فلترة
+          </Button>
+          <Button variant="outline" onClick={() => window.location.reload()}>
+            <RefreshCw className="w-4 h-4 ml-2" />
+            تحديث
+          </Button>
+        </div>
       </div>
+
+      {/* Search and Filters */}
+      <Card className="p-4">
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <div className="relative">
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                placeholder="البحث في الدورات والدروس والمدرسين..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pr-10"
+              />
+            </div>
+          </div>
+          
+          {showFilters && (
+            <div className="flex gap-2 flex-wrap">
+              <Select value={filterStatus} onValueChange={setFilterStatus}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="الحالة" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">جميع الحالات</SelectItem>
+                  <SelectItem value="active">نشط</SelectItem>
+                  <SelectItem value="inactive">معطل</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select value={filterDomain} onValueChange={setFilterDomain}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="المجال" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">جميع المجالات</SelectItem>
+                  {domains.map(domain => (
+                    <SelectItem key={domain.id} value={domain.id.toString()}>
+                      {domain.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Button variant="outline" onClick={clearFilters}>
+                مسح الفلاتر
+              </Button>
+            </div>
+          )}
+        </div>
+      </Card>
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="courses">الدورات والمستويات</TabsTrigger>
           <TabsTrigger value="lessons">الدروس</TabsTrigger>
-          <TabsTrigger value="taxonomy">التصنيف</TabsTrigger>
+          <TabsTrigger value="taxonomy">التصنيف الجديد</TabsTrigger>
           <TabsTrigger value="instructors">المدرسين</TabsTrigger>
         </TabsList>
 
         {/* Courses Tab */}
         <TabsContent value="courses" className="space-y-4">
-          <div className="flex gap-2">
-            <Dialog open={dialogs.addCourse} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addCourse: open }))}>
-              <DialogTrigger asChild>
-                <Button>
-                  <Plus className="w-4 h-4 ml-2" /> إضافة دورة
-                </Button>
-              </DialogTrigger>
+          <div className="flex flex-col md:flex-row gap-4 justify-between">
+            <div className="flex gap-2">
+              <Dialog open={dialogs.addCourse} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addCourse: open }))}>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="w-4 h-4 ml-2" /> إضافة دورة
+                  </Button>
+                </DialogTrigger>
               <DialogContent className="max-w-2xl">
                 <DialogHeader>
                   <DialogTitle>إضافة دورة جديدة</DialogTitle>
@@ -752,29 +1046,12 @@ export default function EnhancedCourseManagement() {
                   />
                   
                   <div className="grid grid-cols-3 gap-4">
-                    <Select value={courseForm.domainId} onValueChange={(v) => setCourseForm({ ...courseForm, domainId: v, specializationId: "", subjectId: "" })}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="اختر المجال" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {domains.map(domain => (
-                          <SelectItem key={domain.id} value={domain.id.toString()}>
-                            {domain.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-
-                    <Select 
-                      value={courseForm.specializationId} 
-                      onValueChange={(v) => setCourseForm({ ...courseForm, specializationId: v, subjectId: "" })}
-                      disabled={!courseForm.domainId}
-                    >
+                    <Select value={courseForm.specializationId} onValueChange={(v) => setCourseForm({ ...courseForm, specializationId: v, subjectId: "", instructorId: "" })}>
                       <SelectTrigger>
                         <SelectValue placeholder="اختر الاختصاص" />
                       </SelectTrigger>
                       <SelectContent>
-                        {getFilteredSpecializations(courseForm.domainId).map(spec => (
+                        {specializations.map(spec => (
                           <SelectItem key={spec.id} value={spec.id.toString()}>
                             {spec.name}
                           </SelectItem>
@@ -784,7 +1061,7 @@ export default function EnhancedCourseManagement() {
 
                     <Select 
                       value={courseForm.subjectId} 
-                      onValueChange={(v) => setCourseForm({ ...courseForm, subjectId: v })}
+                      onValueChange={(v) => setCourseForm({ ...courseForm, subjectId: v, instructorId: "" })}
                       disabled={!courseForm.specializationId}
                     >
                       <SelectTrigger>
@@ -798,20 +1075,24 @@ export default function EnhancedCourseManagement() {
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
 
-                  <Select value={courseForm.instructorIds[0]?.toString() || ""} onValueChange={(v) => setCourseForm({ ...courseForm, instructorIds: [parseInt(v)] })}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="اختر المدرس" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {instructors.map(instructor => (
-                        <SelectItem key={instructor.id} value={instructor.id.toString()}>
-                          {instructor.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <Select 
+                      value={courseForm.instructorId} 
+                      onValueChange={(v) => setCourseForm({ ...courseForm, instructorId: v })}
+                      disabled={!courseForm.subjectId}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="اختر المدرس" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {getInstructorsBySubject(courseForm.subjectId).map(instructor => (
+                          <SelectItem key={instructor.id} value={instructor.id.toString()}>
+                            {instructor.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
 
                   <div className="grid grid-cols-1 gap-2">
                     <Input
@@ -850,12 +1131,12 @@ export default function EnhancedCourseManagement() {
               </DialogContent>
             </Dialog>
 
-            <Dialog open={dialogs.addLevel} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addLevel: open }))}>
-              <DialogTrigger asChild>
-                <Button variant="outline">
-                  <Plus className="w-4 h-4 ml-2" /> إضافة مستوى
-                </Button>
-              </DialogTrigger>
+              <Dialog open={dialogs.addLevel} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addLevel: open }))}>
+                <DialogTrigger asChild>
+                  <Button variant="outline">
+                    <Plus className="w-4 h-4 ml-2" /> إضافة مستوى
+                  </Button>
+                </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>إضافة مستوى جديد</DialogTitle>
@@ -893,19 +1174,70 @@ export default function EnhancedCourseManagement() {
                 </div>
               </DialogContent>
             </Dialog>
+            </div>
+
+            {/* Bulk Operations */}
+            {selectedItems.length > 0 && (
+              <div className="flex gap-2 items-center">
+                <span className="text-sm text-gray-600">
+                  {selectedItems.length} عنصر محدد
+                </span>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => handleBulkAction('activate', 'courses')}
+                >
+                  <Play className="w-4 h-4 ml-1" />
+                  تفعيل
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => handleBulkAction('deactivate', 'courses')}
+                >
+                  <Pause className="w-4 h-4 ml-1" />
+                  تعطيل
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="destructive"
+                  onClick={() => handleBulkAction('delete', 'courses')}
+                >
+                  <Trash2 className="w-4 h-4 ml-1" />
+                  حذف
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => exportData('courses')}
+                >
+                  <Download className="w-4 h-4 ml-1" />
+                  تصدير
+                </Button>
+              </div>
+            )}
           </div>
 
           {/* Courses List */}
           <Card>
             <CardHeader>
-              <CardTitle>قائمة الدورات والمستويات</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>قائمة الدورات والمستويات</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={selectedItems.length === getFilteredCourses().length && getFilteredCourses().length > 0}
+                    onCheckedChange={() => handleSelectAll('courses')}
+                  />
+                  <span className="text-sm text-gray-600">اختيار الكل</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {courses.map(course => {
+                {getFilteredCourses().map(course => {
+                  const courseSpecialization = specializations.find(s => s.id === course.specializationId)
                   const courseSubject = subjects.find(s => s.id === course.subjectId)
-                  const courseSpecialization = specializations.find(s => s.id === courseSubject?.specializationId)
-                  const courseDomain = domains.find(d => d.id === courseSpecialization?.domainId)
+                  const courseInstructor = instructors.find(i => i.id === course.instructorId)
                   const courseLevelsData = getCourseLevels(course.id)
                   
                   return (
@@ -919,6 +1251,11 @@ export default function EnhancedCourseManagement() {
                           <CardHeader className="cursor-pointer hover:bg-gray-50">
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-3">
+                                <Checkbox
+                                  checked={selectedItems.includes(course.id)}
+                                  onCheckedChange={() => handleSelectItem(course.id)}
+                                  onClick={(e) => e.stopPropagation()}
+                                />
                                 {expandedCourses[course.id] ? 
                                   <ChevronDown className="w-5 h-5" /> : 
                                   <ChevronRight className="w-5 h-5" />
@@ -927,7 +1264,7 @@ export default function EnhancedCourseManagement() {
                                 <div>
                                   <CardTitle className="text-lg">{course.title}</CardTitle>
                                   <CardDescription>
-                                    {courseDomain?.name} → {courseSpecialization?.name} → {courseSubject?.name}
+                                    {courseSpecialization?.name} → {courseSubject?.name} → {courseInstructor?.name}
                                   </CardDescription>
                                   <div className="flex gap-2 mt-2">
                                     <Badge variant={course.isActive ? "default" : "secondary"}>
@@ -1016,12 +1353,13 @@ export default function EnhancedCourseManagement() {
 
         {/* Lessons Tab */}
         <TabsContent value="lessons" className="space-y-4">
-          <Dialog open={dialogs.addLesson} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addLesson: open }))}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="w-4 h-4 ml-2" /> إضافة درس
-              </Button>
-            </DialogTrigger>
+          <div className="flex flex-col md:flex-row gap-4 justify-between">
+            <Dialog open={dialogs.addLesson} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addLesson: open }))}>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="w-4 h-4 ml-2" /> إضافة درس
+                </Button>
+              </DialogTrigger>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
                 <DialogTitle>إضافة درس جديد</DialogTitle>
@@ -1116,14 +1454,50 @@ export default function EnhancedCourseManagement() {
             </DialogContent>
           </Dialog>
 
+          {/* Bulk Operations for Lessons */}
+          {selectedItems.length > 0 && activeTab === 'lessons' && (
+            <div className="flex gap-2 items-center">
+              <span className="text-sm text-gray-600">
+                {selectedItems.length} درس محدد
+              </span>
+              <Button 
+                size="sm" 
+                variant="destructive"
+                onClick={() => handleBulkAction('delete', 'lessons')}
+              >
+                <Trash2 className="w-4 h-4 ml-1" />
+                حذف
+              </Button>
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => exportData('lessons')}
+              >
+                <Download className="w-4 h-4 ml-1" />
+                تصدير
+              </Button>
+            </div>
+          )}
+          </div>
+
           <Card>
             <CardHeader>
-              <CardTitle>قائمة الدروس</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>قائمة الدروس</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={selectedItems.length === getFilteredLessons().length && getFilteredLessons().length > 0}
+                    onCheckedChange={() => handleSelectAll('lessons')}
+                  />
+                  <span className="text-sm text-gray-600">اختيار الكل</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="w-12"></TableHead>
                     <TableHead>العنوان</TableHead>
                     <TableHead>الدورة</TableHead>
                     <TableHead>المستوى</TableHead>
@@ -1134,8 +1508,14 @@ export default function EnhancedCourseManagement() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {lessons.map(lesson => (
+                  {getFilteredLessons().map(lesson => (
                     <TableRow key={lesson.id}>
+                      <TableCell>
+                        <Checkbox
+                          checked={selectedItems.includes(lesson.id)}
+                          onCheckedChange={() => handleSelectItem(lesson.id)}
+                        />
+                      </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <Video className="w-4 h-4 text-blue-600" />
@@ -1188,67 +1568,14 @@ export default function EnhancedCourseManagement() {
           </Card>
         </TabsContent>
 
-        {/* Taxonomy Tab */}
+        {/* Taxonomy Tab - Updated for new structure */}
         <TabsContent value="taxonomy" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Domains */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <BookOpen className="w-5 h-5" />
-                  <CardTitle>المجالات</CardTitle>
-                </div>
-                <Dialog open={dialogs.addDomain} onOpenChange={(open)=>setDialogs(prev=>({...prev, addDomain: open}))}>
-                  <DialogTrigger asChild>
-                    <Button size="sm">
-                      <Plus className="w-4 h-4 ml-1"/> إضافة مجال
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-md">
-                    <DialogHeader>
-                      <DialogTitle>إضافة مجال</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-3">
-                      <Label>اسم المجال</Label>
-                      <Input value={domainForm.name} onChange={(e)=>setDomainForm({name: e.target.value})} placeholder="مثال: تقنية المعلومات" />
-                      <div className="flex justify-end gap-2">
-                        <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, addDomain:false}))}>إلغاء</Button>
-                        <Button onClick={handleAddDomain}>إضافة</Button>
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
-                  {domains.map(domain => (
-                    <div key={domain.id} className="flex items-center justify-between p-3 border rounded">
-                      <span>{domain.name}</span>
-                      <div className="flex gap-1">
-                        <Badge variant={domain.isActive ? "default" : "secondary"}>
-                          {domain.isActive ? "نشط" : "معطل"}
-                        </Badge>
-                        <Button size="sm" variant="outline" onClick={() => toggleDomainStatus(domain.id)}>
-                          {domain.isActive ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-                        </Button>
-                        <Button size="sm" variant="outline" onClick={() => openEditDomain(domain)}>
-                          <Edit className="w-3 h-3" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => deleteDomain(domain.id)}>
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
             {/* Specializations */}
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Settings className="w-5 h-5" />
+                  <BookOpen className="w-5 h-5" />
                   <CardTitle>الاختصاصات</CardTitle>
                 </div>
                 <Dialog open={dialogs.addSpecialization} onOpenChange={(open)=>setDialogs(prev=>({...prev, addSpecialization: open}))}>
@@ -1262,19 +1589,8 @@ export default function EnhancedCourseManagement() {
                       <DialogTitle>إضافة اختصاص</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-3">
-                      <Label>المجال</Label>
-                      <Select value={specializationForm.domainId} onValueChange={(v)=>setSpecializationForm(prev=>({...prev, domainId: v}))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="اختر المجال" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {domains.map(d=> (
-                            <SelectItem key={d.id} value={d.id.toString()}>{d.name}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
                       <Label>اسم الاختصاص</Label>
-                      <Input value={specializationForm.name} onChange={(e)=>setSpecializationForm(prev=>({...prev, name: e.target.value}))} placeholder="مثال: علوم الحاسوب" />
+                      <Input value={specializationForm.name} onChange={(e)=>setSpecializationForm({name: e.target.value})} placeholder="مثال: معلوماتية" />
                       <div className="flex justify-end gap-2">
                         <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, addSpecialization:false}))}>إلغاء</Button>
                         <Button onClick={handleAddSpecialization}>إضافة</Button>
@@ -1287,12 +1603,7 @@ export default function EnhancedCourseManagement() {
                 <div className="space-y-2">
                   {specializations.map(spec => (
                     <div key={spec.id} className="flex items-center justify-between p-3 border rounded">
-                      <div>
-                        <div className="font-medium">{spec.name}</div>
-                        <div className="text-sm text-gray-500">
-                          {getDomainName(spec.domainId)}
-                        </div>
-                      </div>
+                      <span>{spec.name}</span>
                       <div className="flex gap-1">
                         <Badge variant={spec.isActive ? "default" : "secondary"}>
                           {spec.isActive ? "نشط" : "معطل"}
@@ -1317,7 +1628,7 @@ export default function EnhancedCourseManagement() {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <BookOpen className="w-5 h-5" />
+                  <Settings className="w-5 h-5" />
                   <CardTitle>المواد</CardTitle>
                 </div>
                 <Dialog open={dialogs.addSubject} onOpenChange={(open)=>setDialogs(prev=>({...prev, addSubject: open}))}>
@@ -1343,7 +1654,7 @@ export default function EnhancedCourseManagement() {
                         </SelectContent>
                       </Select>
                       <Label>اسم المادة</Label>
-                      <Input value={subjectForm.name} onChange={(e)=>setSubjectForm(prev=>({...prev, name: e.target.value}))} placeholder="مثال: البرمجة" />
+                      <Input value={subjectForm.name} onChange={(e)=>setSubjectForm(prev=>({...prev, name: e.target.value}))} placeholder="مثال: لغة C#" />
                       <div className="flex justify-end gap-2">
                         <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, addSubject:false}))}>إلغاء</Button>
                         <Button onClick={handleAddSubject}>إضافة</Button>
@@ -1381,41 +1692,85 @@ export default function EnhancedCourseManagement() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-          {/* Edit dialogs for taxonomy */}
-          <Dialog open={dialogs.editDomain} onOpenChange={(open)=>setDialogs(prev=>({...prev, editDomain: open}))}>
-            <DialogContent className="max-w-md">
-              <DialogHeader>
-                <DialogTitle>تعديل مجال</DialogTitle>
-              </DialogHeader>
-              <div className="space-y-3">
-                <Label>اسم المجال</Label>
-                <Input value={editDomainForm.name} onChange={(e)=>setEditDomainForm(prev=>({...prev, name: e.target.value}))} />
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, editDomain:false}))}>إلغاء</Button>
-                  <Button onClick={handleUpdateDomain}>حفظ</Button>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
 
+            {/* Instructors */}
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Users className="w-5 h-5" />
+                  <CardTitle>المدرسين</CardTitle>
+                </div>
+                <Dialog open={dialogs.addInstructor} onOpenChange={(open)=>setDialogs(prev=>({...prev, addInstructor: open}))}>
+                  <DialogTrigger asChild>
+                    <Button size="sm">
+                      <Plus className="w-4 h-4 ml-1"/> إضافة مدرس
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>إضافة مدرس</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-3">
+                      <Label>المادة</Label>
+                      <Select value={instructorForm.subjectId} onValueChange={(v)=>setInstructorForm(prev=>({...prev, subjectId: v}))}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="اختر المادة" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {subjects.map(s=> (
+                            <SelectItem key={s.id} value={s.id.toString()}>{s.name}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <Label>اسم المدرس</Label>
+                      <Input value={instructorForm.name} onChange={(e)=>setInstructorForm(prev=>({...prev, name: e.target.value}))} placeholder="مثال: محمد أحمد" />
+                      <Label>السيرة الذاتية</Label>
+                      <Textarea value={instructorForm.bio} onChange={(e)=>setInstructorForm(prev=>({...prev, bio: e.target.value}))} placeholder="نبذة عن المدرس" />
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, addInstructor:false}))}>إلغاء</Button>
+                        <Button onClick={handleAddInstructor}>إضافة</Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  {instructors.map(instructor => (
+                    <div key={instructor.id} className="flex items-center justify-between p-3 border rounded">
+                      <div>
+                        <div className="font-medium">{instructor.name}</div>
+                        <div className="text-sm text-gray-500">
+                          {getSubjectName(instructor.subjectId)}
+                        </div>
+                      </div>
+                      <div className="flex gap-1">
+                        <Badge variant={instructor.isActive ? "default" : "secondary"}>
+                          {instructor.isActive ? "نشط" : "معطل"}
+                        </Badge>
+                        <Button size="sm" variant="outline" onClick={() => toggleInstructorStatus(instructor.id)}>
+                          {instructor.isActive ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => openEditInstructor(instructor)}>
+                          <Edit className="w-3 h-3" />
+                        </Button>
+                        <Button size="sm" variant="destructive" onClick={() => deleteInstructor(instructor.id)}>
+                          <Trash2 className="w-3 h-3" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          {/* Edit dialogs for taxonomy - Updated for new structure */}
           <Dialog open={dialogs.editSpecialization} onOpenChange={(open)=>setDialogs(prev=>({...prev, editSpecialization: open}))}>
             <DialogContent className="max-w-md">
               <DialogHeader>
                 <DialogTitle>تعديل اختصاص</DialogTitle>
               </DialogHeader>
               <div className="space-y-3">
-                <Label>المجال</Label>
-                <Select value={editSpecializationForm.domainId} onValueChange={(v)=>setEditSpecializationForm(prev=>({...prev, domainId: v}))}>
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {domains.map(d=> (
-                      <SelectItem key={d.id} value={d.id.toString()}>{d.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
                 <Label>اسم الاختصاص</Label>
                 <Input value={editSpecializationForm.name} onChange={(e)=>setEditSpecializationForm(prev=>({...prev, name: e.target.value}))} />
                 <div className="flex justify-end gap-2">
@@ -1452,21 +1807,63 @@ export default function EnhancedCourseManagement() {
               </div>
             </DialogContent>
           </Dialog>
+
+          <Dialog open={dialogs.editInstructor} onOpenChange={(open)=>setDialogs(prev=>({...prev, editInstructor: open}))}>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>تعديل مدرس</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-3">
+                <Label>المادة</Label>
+                <Select value={instructorForm.subjectId} onValueChange={(v)=>setInstructorForm(prev=>({...prev, subjectId: v}))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {subjects.map(s=> (
+                      <SelectItem key={s.id} value={s.id.toString()}>{s.name}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Label>اسم المدرس</Label>
+                <Input value={instructorForm.name} onChange={(e)=>setInstructorForm(prev=>({...prev, name: e.target.value}))} />
+                <Label>السيرة الذاتية</Label>
+                <Textarea value={instructorForm.bio} onChange={(e)=>setInstructorForm(prev=>({...prev, bio: e.target.value}))} />
+                <div className="flex justify-end gap-2">
+                  <Button variant="outline" onClick={()=>setDialogs(prev=>({...prev, editInstructor:false}))}>إلغاء</Button>
+                  <Button onClick={handleUpdateInstructor}>حفظ</Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </TabsContent>
 
         {/* Instructors Tab */}
         <TabsContent value="instructors" className="space-y-4">
-          <Dialog open={dialogs.addInstructor} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addInstructor: open }))}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="w-4 h-4 ml-2" /> إضافة مدرس
-              </Button>
-            </DialogTrigger>
+          <div className="flex flex-col md:flex-row gap-4 justify-between">
+            <Dialog open={dialogs.addInstructor} onOpenChange={(open) => setDialogs(prev => ({ ...prev, addInstructor: open }))}>
+              <DialogTrigger asChild>
+                <Button>
+                  <Plus className="w-4 h-4 ml-2" /> إضافة مدرس
+                </Button>
+              </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>إضافة مدرس جديد</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
+                <Select value={instructorForm.subjectId} onValueChange={(v) => setInstructorForm({ ...instructorForm, subjectId: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="اختر المادة" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {subjects.map(subject => (
+                      <SelectItem key={subject.id} value={subject.id.toString()}>
+                        {subject.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
                 <Input
                   placeholder="اسم المدرس"
                   value={instructorForm.name}
@@ -1492,20 +1889,78 @@ export default function EnhancedCourseManagement() {
             </DialogContent>
           </Dialog>
 
+          {/* Bulk Operations for Instructors */}
+          {selectedItems.length > 0 && activeTab === 'instructors' && (
+            <div className="flex gap-2 items-center">
+              <span className="text-sm text-gray-600">
+                {selectedItems.length} مدرس محدد
+              </span>
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => handleBulkAction('activate', 'instructors')}
+              >
+                <Play className="w-4 h-4 ml-1" />
+                تفعيل
+              </Button>
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => handleBulkAction('deactivate', 'instructors')}
+              >
+                <Pause className="w-4 h-4 ml-1" />
+                تعطيل
+              </Button>
+              <Button 
+                size="sm" 
+                variant="destructive"
+                onClick={() => handleBulkAction('delete', 'instructors')}
+              >
+                <Trash2 className="w-4 h-4 ml-1" />
+                حذف
+              </Button>
+              <Button 
+                size="sm" 
+                variant="outline"
+                onClick={() => exportData('instructors')}
+              >
+                <Download className="w-4 h-4 ml-1" />
+                تصدير
+              </Button>
+            </div>
+          )}
+          </div>
+
           <Card>
             <CardHeader>
-              <CardTitle>قائمة المدرسين</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>قائمة المدرسين</CardTitle>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    checked={selectedItems.length === getFilteredInstructors().length && getFilteredInstructors().length > 0}
+                    onCheckedChange={() => handleSelectAll('instructors')}
+                  />
+                  <span className="text-sm text-gray-600">اختيار الكل</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {instructors.map(instructor => (
-                  <Card key={instructor.id}>
+                {getFilteredInstructors().map(instructor => (
+                  <Card key={instructor.id} className={selectedItems.includes(instructor.id) ? 'ring-2 ring-blue-500' : ''}>
                     <CardHeader>
                       <div className="flex items-center gap-3">
+                        <Checkbox
+                          checked={selectedItems.includes(instructor.id)}
+                          onCheckedChange={() => handleSelectItem(instructor.id)}
+                        />
                         <Users className="w-8 h-8 text-blue-600" />
                         <div>
                           <CardTitle className="text-lg">{instructor.name}</CardTitle>
                           <CardDescription>{instructor.bio}</CardDescription>
+                          <div className="text-sm text-gray-500 mt-1">
+                            {getSubjectName(instructor.subjectId)}
+                          </div>
                         </div>
                       </div>
                     </CardHeader>
@@ -1527,7 +1982,7 @@ export default function EnhancedCourseManagement() {
                         </div>
                       </div>
                       <div className="mt-3 text-sm text-gray-600">
-                        الدورات: {courses.filter(c => c.instructorIds.includes(instructor.id)).length}
+                        الدورات: {courses.filter(c => c.instructorId === instructor.id).length}
                       </div>
                     </CardContent>
                   </Card>
@@ -1592,6 +2047,45 @@ export default function EnhancedCourseManagement() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Bulk Action Confirmation Dialog */}
+      <AlertDialog open={dialogs.bulkDelete} onOpenChange={(open) => setDialogs(prev => ({ ...prev, bulkDelete: open }))}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>تأكيد العملية</AlertDialogTitle>
+            <AlertDialogDescription>
+              هل أنت متأكد من {bulkAction === 'delete' ? 'حذف' : bulkAction === 'activate' ? 'تفعيل' : 'تعطيل'} {selectedItems.length} عنصر؟
+              {bulkAction === 'delete' && (
+                <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded text-red-700">
+                  <AlertTriangle className="w-4 h-4 inline ml-1" />
+                  تحذير: لا يمكن التراجع عن عملية الحذف
+                </div>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>إلغاء</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmBulkAction}
+              className={bulkAction === 'delete' ? 'bg-red-600 hover:bg-red-700' : ''}
+            >
+              تأكيد
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm ${
+          toast.variant === 'destructive' 
+            ? 'bg-red-100 border border-red-200 text-red-800' 
+            : 'bg-green-100 border border-green-200 text-green-800'
+        }`}>
+          <div className="font-medium">{toast.title}</div>
+          <div className="text-sm">{toast.description}</div>
+        </div>
+      )}
     </div>
   )
 }

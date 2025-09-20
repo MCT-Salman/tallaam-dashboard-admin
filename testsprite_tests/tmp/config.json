@@ -1,0 +1,16 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5174",
+  "executionArgs": {
+    "projectName": "tallaam_dashboard_admin",
+    "projectPath": "C:\\Users\\MCT\\Desktop\\dashboard\\tallaam_dashboard_admin",
+    "testIds": [],
+    "additionalInstruction": "Run comprehensive tests to identify any errors, bugs, or issues in the application. Focus on testing the course management system, authentication, navigation, and all admin features. Check for JavaScript errors, broken functionality, UI issues, and data flow problems.",
+    "envs": {
+      "API_KEY": "sk-user-goF66UADdwqROQ0o_hO6H7mzhRLO17lsun4E-9uMwpk3lPyCKEYH8W4IevkxYndYPBw07joOjAMllQ8_cR3NckftOQQU_WtxswCFeUYVWeMlSJah6lSriBWPXoFFH8SoBDM"
+    }
+  },
+  "proxy": "http://34573ea2-bd7d-4cc8-968f-faf7d6f242f3:Lu4aY8djSY3JdyzKxhuDtLbIvv3RToLD@tun.testsprite.com:8080"
+}

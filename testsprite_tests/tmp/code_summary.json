@@ -1,0 +1,215 @@
+{
+  "tech_stack": [
+    "JavaScript",
+    "React 19.1.1",
+    "Vite 7.1.2",
+    "React Router DOM 7.9.1",
+    "Tailwind CSS 4.1.13",
+    "Radix UI",
+    "TanStack React Query 5.89.0",
+    "Axios 1.12.2",
+    "React Hook Form 7.62.0",
+    "Zod 4.1.9",
+    "Lucide React 0.544.0",
+    "Recharts 3.2.1",
+    "PapaParse 5.5.3",
+    "Sonner 2.0.7"
+  ],
+  "features": [
+    {
+      "name": "Dashboard Layout",
+      "description": "Main layout component with sidebar navigation and header",
+      "files": [
+        "src/components/layout/DashboardLayout.jsx",
+        "src/components/layout/Header.jsx",
+        "src/components/layout/Sidebar.jsx"
+      ]
+    },
+    {
+      "name": "Course Management System",
+      "description": "Comprehensive course management with hierarchical structure: Specialization → Subject → Instructor → Level → Lessons",
+      "files": [
+        "src/pages/admin/CourseManagement.jsx"
+      ]
+    },
+    {
+      "name": "Student Management",
+      "description": "Student enrollment and management system",
+      "files": [
+        "src/pages/admin/StudentManagement.jsx",
+        "src/pages/Students.jsx"
+      ]
+    },
+    {
+      "name": "Financial Management",
+      "description": "Financial tracking and management system",
+      "files": [
+        "src/pages/admin/FinancialManagement.jsx"
+      ]
+    },
+    {
+      "name": "Sales Management",
+      "description": "Sales tracking and analytics",
+      "files": [
+        "src/pages/admin/SalesManagement.jsx"
+      ]
+    },
+    {
+      "name": "Coupon Management",
+      "description": "Coupon creation and management system",
+      "files": [
+        "src/pages/admin/CouponManagement.jsx"
+      ]
+    },
+    {
+      "name": "Access Codes Management",
+      "description": "Access code generation and management",
+      "files": [
+        "src/pages/admin/AccessCodes.jsx"
+      ]
+    },
+    {
+      "name": "Ads Management",
+      "description": "Advertisement management system",
+      "files": [
+        "src/pages/admin/AdsManagement.jsx"
+      ]
+    },
+    {
+      "name": "Link Verification",
+      "description": "YouTube link verification system",
+      "files": [
+        "src/pages/admin/LinkVerification.jsx"
+      ]
+    },
+    {
+      "name": "Sub Admin Management",
+      "description": "Sub-administrator management system",
+      "files": [
+        "src/pages/admin/SubAdminManagement.jsx"
+      ]
+    },
+    {
+      "name": "Suggestions Management",
+      "description": "User suggestions and feedback management",
+      "files": [
+        "src/pages/admin/SuggestionsManagement.jsx"
+      ]
+    },
+    {
+      "name": "Admin Settings",
+      "description": "Application settings and configuration",
+      "files": [
+        "src/pages/admin/AdminSettings.jsx"
+      ]
+    },
+    {
+      "name": "Authentication System",
+      "description": "User authentication and authorization",
+      "files": [
+        "src/pages/Login.jsx",
+        "src/contexts/AuthContext.jsx"
+      ]
+    },
+    {
+      "name": "App Settings Context",
+      "description": "Global application settings management",
+      "files": [
+        "src/contexts/AppSettingsContext.jsx"
+      ]
+    },
+    {
+      "name": "UI Components Library",
+      "description": "Reusable UI components based on Radix UI",
+      "files": [
+        "src/components/ui/accordion.jsx",
+        "src/components/ui/alert-dialog.jsx",
+        "src/components/ui/alert.jsx",
+        "src/components/ui/avatar.jsx",
+        "src/components/ui/badge.jsx",
+        "src/components/ui/button.jsx",
+        "src/components/ui/card.jsx",
+        "src/components/ui/checkbox.jsx",
+        "src/components/ui/dialog.jsx",
+        "src/components/ui/dropdown-menu.jsx",
+        "src/components/ui/input.jsx",
+        "src/components/ui/label.jsx",
+        "src/components/ui/select.jsx",
+        "src/components/ui/table.jsx",
+        "src/components/ui/tabs.jsx",
+        "src/components/ui/textarea.jsx",
+        "src/components/ui/toast.jsx",
+        "src/components/ui/tooltip.jsx"
+      ]
+    },
+    {
+      "name": "Dashboard Statistics",
+      "description": "Dashboard statistics and analytics cards",
+      "files": [
+        "src/components/dashboard/StatsCard.jsx",
+        "src/pages/Dashboard.jsx"
+      ]
+    },
+    {
+      "name": "Mock Data Services",
+      "description": "Mock API services for development and testing",
+      "files": [
+        "src/services/adminMockData.js",
+        "src/services/authMock.js",
+        "src/services/mockApi.js",
+        "src/mocks/accessCodes.json",
+        "src/mocks/coupons.json",
+        "src/mocks/courses.json",
+        "src/mocks/students.json",
+        "src/mocks/transactions.json",
+        "src/mocks/videoChecks.json"
+      ]
+    },
+    {
+      "name": "Utility Functions",
+      "description": "Helper functions and utilities",
+      "files": [
+        "src/lib/utils.js",
+        "src/utils/csv.js",
+        "src/hooks/use-mobile.jsx",
+        "src/hooks/use-toast.js"
+      ]
+    },
+    {
+      "name": "Routing System",
+      "description": "Application routing and navigation",
+      "files": [
+        "src/App.jsx",
+        "src/main.jsx"
+      ]
+    },
+    {
+      "name": "Reports System",
+      "description": "Reporting and analytics system",
+      "files": [
+        "src/pages/Reports.jsx"
+      ]
+    },
+    {
+      "name": "Notifications System",
+      "description": "User notifications management",
+      "files": [
+        "src/pages/Notifications.jsx"
+      ]
+    },
+    {
+      "name": "Profile Management",
+      "description": "User profile management",
+      "files": [
+        "src/pages/Profile.jsx"
+      ]
+    },
+    {
+      "name": "Settings Management",
+      "description": "User settings management",
+      "files": [
+        "src/pages/Settings.jsx"
+      ]
+    }
+  ]
+}

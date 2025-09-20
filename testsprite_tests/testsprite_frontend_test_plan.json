@@ -1,0 +1,536 @@
+[
+  {
+    "id": "TC001",
+    "title": "User Registration with Valid Phone Number and Correct OTP",
+    "description": "Verify user can register successfully using a valid phone number and correct OTP, then set password and provide personal info including avatar.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the app and navigate through introduction cards."
+      },
+      {
+        "type": "action",
+        "description": "Tap on registration and enter a valid phone number."
+      },
+      {
+        "type": "action",
+        "description": "Receive OTP and enter the correct code."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm OTP validation is successful and proceed."
+      },
+      {
+        "type": "action",
+        "description": "Set a valid password."
+      },
+      {
+        "type": "action",
+        "description": "Enter personal details including uploading an avatar."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify registration completes and user is redirected to login or app home."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "User Registration with Invalid Phone Number",
+    "description": "Verify registration prevents proceeding when an invalid phone number is entered.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Launch app and navigate to registration screen."
+      },
+      {
+        "type": "action",
+        "description": "Enter an invalid phone number format."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify app shows validation error message about invalid phone number."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "OTP Verification with Incorrect Code",
+    "description": "Verify that entering incorrect OTP code prevents registration and shows appropriate error message.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Begin registration with a valid phone number."
+      },
+      {
+        "type": "action",
+        "description": "Input an incorrect OTP code."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify registration flow does not proceed and shows OTP error."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Login with Correct Phone Number and Password",
+    "description": "Verify user can login successfully with correct phone number and password.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open login screen."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid registered phone number and correct password."
+      },
+      {
+        "type": "action",
+        "description": "Tap login button."
+      },
+      {
+        "type": "assertion",
+        "description": "User is logged in and redirected to the main app interface."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Login with Incorrect Password",
+    "description": "Verify error message displays correctly when user attempts login with incorrect password.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to login page."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid phone number but wrong password."
+      },
+      {
+        "type": "action",
+        "description": "Tap login."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify login is denied with clear error message."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Prevent Multi-Device Login",
+    "description": "Verify that login is blocked if the user tries to login from a second device simultaneously.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login successfully on Device 1 with valid credentials."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to login on Device 2 using same credentials."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that login on Device 2 is blocked with an appropriate message."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Browse Course Catalog and View Course Details",
+    "description": "Verify user can browse the course catalog and view detailed information including demo video, instructor info, pricing, and course contents.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as a student."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to course catalog."
+      },
+      {
+        "type": "action",
+        "description": "Select a course specialization and drill down to subject and course."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm course details page displays demo video, instructor, price, multimedia lessons, and purchase options."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Purchase Course via External Messenger with Pre-filled Message",
+    "description": "Verify purchase course link opens WhatsApp or Telegram with the correct pre-filled message for payment.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "On course purchase page, tap purchase link/button."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify external messenger (WhatsApp or Telegram) opens with pre-filled purchase message."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Activate Course Code and Access Course Content",
+    "description": "Verify user can enter a valid purchased course code, activate it successfully, and gain access to course materials and lessons.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to course code activation page."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid course access code."
+      },
+      {
+        "type": "action",
+        "description": "Submit activation request."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm activation success message and that course contents become accessible."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Video Playback with DRM Protection and Controls",
+    "description": "Verify DRM protected course videos play correctly with available controls and prevent unauthorized screen recording.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open a course lesson with video."
+      },
+      {
+        "type": "action",
+        "description": "Play the DRM protected video."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify video playback controls work as expected (play, pause, seek)."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify screen recording is blocked or disabled during playback."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Complete End-of-Unit Quiz and Upload Media Answer",
+    "description": "Verify user can complete quizzes at the end of course units and upload media files within allowed duration as part of answers.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to a quiz after completing a video lesson."
+      },
+      {
+        "type": "action",
+        "description": "Answer quiz questions."
+      },
+      {
+        "type": "action",
+        "description": "Upload a media file not exceeding 30 seconds as required."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify quiz submission is accepted and feedback given."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Apply Valid Coupon Code with Eligibility",
+    "description": "Verify that applying a valid coupon code grants discount only if eligibility criteria such as minimum purchased courses are met.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Go to the course purchase screen."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid coupon code that requires a minimum number of purchased courses."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify discount is applied and price is updated accordingly."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Reject Coupon Code When Eligibility Not Met",
+    "description": "Verify that a coupon code does not apply discount if eligibility criteria are not met and displays appropriate feedback.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Attempt to apply coupon code without meeting minimum course purchase conditions."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify coupon is rejected with an explanatory message."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Edit User Profile Information and Change Password",
+    "description": "Verify that users can edit their profile personal information and successfully change their password.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and navigate to profile settings."
+      },
+      {
+        "type": "action",
+        "description": "Edit personal information such as name and avatar."
+      },
+      {
+        "type": "action",
+        "description": "Submit changes and verify update success."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to password change screen."
+      },
+      {
+        "type": "action",
+        "description": "Enter old password and set new password."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify password is changed and user can login with new password."
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Submit User Suggestion and Verify Admin Receives It",
+    "description": "Verify user can submit suggestions or feedback through the app and that admin dashboard receives and displays them.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as user and submit a suggestion or feedback."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm submission success message."
+      },
+      {
+        "type": "action",
+        "description": "Login as admin and navigate to suggestions management."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify newly submitted suggestion appears in admin dashboard."
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Admin Login and Access Various Management Modules",
+    "description": "Verify admin can log in via web dashboard and access modules for course, student, sales, financial, coupon, ads, suggestions, and sub-admin management.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Admin logs into dashboard with valid credentials."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard and sidebar load correctly."
+      },
+      {
+        "type": "action",
+        "description": "Navigate sequentially to: Course Management, Student Management, Sales Management, Financial Management, Coupon Management, Ads Management, Suggestions Management, Sub-Admin Management."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify each module loads and displays relevant data and controls."
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Admin Creates and Exports Financial Reports in Excel Format",
+    "description": "Verify admin can create financial reports, export them in Excel format complying with standards, and that exported data is accurate.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Admin navigates to Financial Management module."
+      },
+      {
+        "type": "action",
+        "description": "Generate a sales/financial report for a date range."
+      },
+      {
+        "type": "action",
+        "description": "Export report to Excel."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the exported Excel file downloads correctly and its content matches the generated report data."
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Admin Verifies YouTube Video Links and Flags Broken URLs",
+    "description": "Verify that the system checks the validity of YouTube video links, flags broken or invalid URLs, and disables or alerts admin accordingly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Admin navigates to Link Verification module."
+      },
+      {
+        "type": "action",
+        "description": "Trigger video link verification scan."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify broken or invalid YouTube links are flagged, disabled, and admin receives notifications."
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Admin Manages User Suggestions - Mark as Read and Delete",
+    "description": "Verify admin can mark user suggestions as read, delete them, and changes reflect dynamically.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Admin opens Suggestions Management module."
+      },
+      {
+        "type": "action",
+        "description": "Select a suggestion and mark as read."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify suggestion status updates to read immediately."
+      },
+      {
+        "type": "action",
+        "description": "Delete a selected suggestion."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify suggestion is removed from list without page reload."
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Validation of User Input Fields Across Registration and Purchase",
+    "description": "Verify all user input fields including registration inputs, course codes, and coupon codes have strict validation and provide visual feedback on errors.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Attempt to submit registration with missing or invalid data fields."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify relevant validation messages appear next to inputs."
+      },
+      {
+        "type": "action",
+        "description": "Enter invalid course or coupon codes and submit."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify invalid code errors are displayed with clear messages."
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "User Notification Center Displays Alerts",
+    "description": "Verify notification center shows alerts for new courses, course updates, and expiring codes accurately and users can dismiss notifications.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as user and navigate to notification center."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify alerts for new courses, updates, and expiring codes are displayed."
+      },
+      {
+        "type": "action",
+        "description": "Dismiss one or more notifications."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dismissed notifications are removed from view."
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "User and Admin UI Usability and Responsiveness",
+    "description": "Verify all user and admin interfaces meet usability guidelines including clarity of layout, ease of navigation, and responsiveness on target devices.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open user and admin screens on Android and iOS devices of various sizes."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI components are clear, easy to navigate, and adapt correctly to different screen sizes."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify buttons and controls are accessible without overlap or truncation."
+      }
+    ]
+  }
+]

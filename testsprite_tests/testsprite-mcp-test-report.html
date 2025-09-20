@@ -1,0 +1,568 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Markdown Preview</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          padding: 40px;
+          line-height: 1.6;
+          background: #fdfdfd;
+          color: #333;
+        }
+        pre {
+          background: #f4f4f4;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: monospace;
+          background: #eee;
+          padding: 2px 4px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>TestSprite AI Testing Report(MCP)</h1>
+<hr>
+<h2>1️⃣ Document Metadata</h2>
+<ul>
+<li><strong>Project Name:</strong> tallaam_dashboard_admin</li>
+<li><strong>Version:</strong> 0.0.0</li>
+<li><strong>Date:</strong> 2025-01-20</li>
+<li><strong>Prepared by:</strong> TestSprite AI Team</li>
+</ul>
+<hr>
+<h2>2️⃣ Requirement Validation Summary</h2>
+<h3>Requirement: User Authentication and Login</h3>
+<ul>
+<li><strong>Description:</strong> Supports phone number/password login with validation and authentication flow.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC001</li>
+<li><strong>Test Name:</strong> User Registration with Valid Phone Number and Correct OTP</li>
+<li><strong>Test Code:</strong> <a href="./TC001_User_Registration_with_Valid_Phone_Number_and_Correct_OTP.py">code_file</a></li>
+<li><strong>Test Error:</strong> The app main page is empty with no interactive elements or introduction cards visible. Registration flow cannot be tested further. Reporting this issue and stopping the task.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/be155597-6c30-4645-898d-2ed4e9b641d0">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed because the frontend application failed to load critical React resources, resulting in an empty main page with no UI elements for registration flow, blocking functional testing.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC002</li>
+<li><strong>Test Name:</strong> User Registration with Invalid Phone Number</li>
+<li><strong>Test Code:</strong> <a href="./TC002_User_Registration_with_Invalid_Phone_Number.py">code_file</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: Timeout 60000ms exceeded.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/8a59100c-07de-4d05-a436-a3b5f709c24f">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed due to a timeout while navigating to the start URL, preventing the UI from loading and the invalid phone number validation to be tested.</li>
+</ul>
+<hr>
+<h4>Test 3</h4>
+<ul>
+<li><strong>Test ID:</strong> TC003</li>
+<li><strong>Test Name:</strong> OTP Verification with Incorrect Code</li>
+<li><strong>Test Code:</strong> <a href="./TC003_OTP_Verification_with_Incorrect_Code.py">code_file</a></li>
+<li><strong>Test Error:</strong> The registration and OTP verification flow could not be found or accessed in the application. The test to verify that entering incorrect OTP prevents registration and shows an error message could not be performed.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/e7a29cb4-4df5-46cd-9553-a8c6c4016ff0">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed because the registration and OTP verification routes are inaccessible; the app fails to load React resources and the /register route leads to a 404, preventing OTP validation testing.</li>
+</ul>
+<hr>
+<h4>Test 4</h4>
+<ul>
+<li><strong>Test ID:</strong> TC004</li>
+<li><strong>Test Name:</strong> Login with Correct Phone Number and Password</li>
+<li><strong>Test Code:</strong> <a href="./TC004_Login_with_Correct_Phone_Number_and_Password.py">code_file</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/535e45fd-f73e-4f2a-89e7-b51c4d195259">View Test</a></li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Analysis / Findings:</strong> Test passed confirming that with correct phone number and password, the user can log in successfully, indicating that authentication and login UI function correctly under normal conditions.</li>
+</ul>
+<hr>
+<h4>Test 5</h4>
+<ul>
+<li><strong>Test ID:</strong> TC005</li>
+<li><strong>Test Name:</strong> Login with Incorrect Password</li>
+<li><strong>Test Code:</strong> <a href="./TC005_Login_with_Incorrect_Password.py">code_file</a></li>
+<li><strong>Test Error:</strong> WebSocket connection failures and resource loading issues preventing login testing.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/cec2302a-62f1-4a54-8363-b756303f45ee">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed due to frontend resource loading failures and WebSocket connection errors, preventing the user from attempting login and verifying error message display for incorrect password.</li>
+</ul>
+<hr>
+<h4>Test 6</h4>
+<ul>
+<li><strong>Test ID:</strong> TC006</li>
+<li><strong>Test Name:</strong> Prevent Multi-Device Login</li>
+<li><strong>Test Code:</strong> <a href="./TC006_Prevent_Multi_Device_Login.py">code_file</a></li>
+<li><strong>Test Error:</strong> Login form or navigation elements are missing on the main page, preventing the login test from starting.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/39e3a51f-d1c0-41aa-9197-3fe510015888">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Login UI and navigation elements failed to load preventing the test to verify multi-device login prevention from starting.</li>
+</ul>
+<hr>
+<h3>Requirement: Course Management and Content Access</h3>
+<ul>
+<li><strong>Description:</strong> Course catalog browsing, course activation, and content access functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC007</li>
+<li><strong>Test Name:</strong> Browse Course Catalog and View Course Details</li>
+<li><strong>Test Code:</strong> <a href="./TC007_Browse_Course_Catalog_and_View_Course_Details.py">code_file</a></li>
+<li><strong>Test Error:</strong> Login failed with provided credentials. The page did not navigate away from the login screen and no error message appeared.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/325587d7-8921-4b8b-b6bb-63a6d930bb80">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test could not proceed because login failed silently with no error displayed; therefore, the user could not access the course catalog UI to browse or view details.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC008</li>
+<li><strong>Test Name:</strong> Purchase Course via External Messenger with Pre-filled Message</li>
+<li><strong>Test Code:</strong> <a href="./TC008_Purchase_Course_via_External_Messenger_with_Pre_filled_Message.py">code_file</a></li>
+<li><strong>Test Error:</strong> The purchase link/button for the course does not open WhatsApp or Telegram with the pre-filled message as expected.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/665460af-ce4d-4274-9756-cdcb3c3843e1">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Purchase link/button functionality failed due to app not loading properly, resulting in inability to open external messenger with pre-filled message as expected.</li>
+</ul>
+<hr>
+<h4>Test 3</h4>
+<ul>
+<li><strong>Test ID:</strong> TC009</li>
+<li><strong>Test Name:</strong> Activate Course Code and Access Course Content</li>
+<li><strong>Test Code:</strong> <a href="./TC009_Activate_Course_Code_and_Access_Course_Content.py">code_file</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/cc41973d-e3d9-4973-ba46-87aae94bd8c2">View Test</a></li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Analysis / Findings:</strong> Test passed confirming successful activation of valid purchased course codes and access to course content, demonstrating correct course code validation and content unlocking.</li>
+</ul>
+<hr>
+<h4>Test 4</h4>
+<ul>
+<li><strong>Test ID:</strong> TC010</li>
+<li><strong>Test Name:</strong> Video Playback with DRM Protection and Controls</li>
+<li><strong>Test Code:</strong> <a href="./TC010_Video_Playback_with_DRM_Protection_and_Controls.py">code_file</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: Timeout 60000ms exceeded.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/b4ee7353-858f-4573-9d27-d7729a89bdcf">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed because the frontend page did not load within timeout, blocking testing of video playback, DRM protection, and UI controls.</li>
+</ul>
+<hr>
+<h4>Test 5</h4>
+<ul>
+<li><strong>Test ID:</strong> TC011</li>
+<li><strong>Test Name:</strong> Complete End-of-Unit Quiz and Upload Media Answer</li>
+<li><strong>Test Code:</strong> <a href="./TC011_Complete_End_of_Unit_Quiz_and_Upload_Media_Answer.py">code_file</a></li>
+<li><strong>Test Error:</strong> The main page is empty with no navigation or course content accessible. Cannot proceed with quiz completion or media upload testing as required.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/d239104a-6ce3-40f7-ac0a-d0e3a0b7995a">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Functional test failed since the main page is empty due to resource loading failures, blocking access to quizzes and media upload components required for test execution.</li>
+</ul>
+<hr>
+<h3>Requirement: Coupon and Discount Management</h3>
+<ul>
+<li><strong>Description:</strong> Coupon code application, validation, and eligibility verification.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC012</li>
+<li><strong>Test Name:</strong> Apply Valid Coupon Code with Eligibility</li>
+<li><strong>Test Code:</strong> <a href="./TC012_Apply_Valid_Coupon_Code_with_Eligibility.py">code_file</a></li>
+<li><strong>Test Error:</strong> Failed to go to the start URL. Err: Error executing action go_to_url: Page.goto: Timeout 60000ms exceeded.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/5bdb3481-b29f-40e1-bc58-ca8cd4744961">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed due to timeout loading the start URL, preventing coupon code application and eligibility verification UI from rendering.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC013</li>
+<li><strong>Test Name:</strong> Reject Coupon Code When Eligibility Not Met</li>
+<li><strong>Test Code:</strong> <a href="./TC013_Reject_Coupon_Code_When_Eligibility_Not_Met.py">code_file</a></li>
+<li><strong>Test Error:</strong> Testing stopped due to the inability to access course details or purchase options. The 'عرض التفاصيل' button is non-functional, preventing further coupon application testing.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/5962d042-302b-4fcd-873a-112b2912ae44">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test stopped because navigation to course details and purchase options failed; the 'عرض التفاصيل' button is non-functional, preventing coupon code rejection and feedback validation.</li>
+</ul>
+<hr>
+<h3>Requirement: User Profile and Account Management</h3>
+<ul>
+<li><strong>Description:</strong> User profile editing, password changes, and account management functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC014</li>
+<li><strong>Test Name:</strong> Edit User Profile Information and Change Password</li>
+<li><strong>Test Code:</strong> <a href="./TC014_Edit_User_Profile_Information_and_Change_Password.py">code_file</a></li>
+<li><strong>Test Error:</strong> Login failed with no feedback or navigation. Cannot proceed with profile editing or password change tests.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/bec9b862-de53-4d32-8444-b7475a47ad12">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Login failed silently with no feedback, preventing access to profile editing and password change functionalities, blocking the test.</li>
+</ul>
+<hr>
+<h3>Requirement: Admin Dashboard and Management</h3>
+<ul>
+<li><strong>Description:</strong> Admin authentication, module access, and management functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC016</li>
+<li><strong>Test Name:</strong> Admin Login and Access Various Management Modules</li>
+<li><strong>Test Code:</strong> <a href="./TC016_Admin_Login_and_Access_Various_Management_Modules.py">code_file</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/9d76c7e5-2f65-4f49-8e97-aa5b54cc75b2">View Test</a></li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Analysis / Findings:</strong> Test passed confirming that admin login and access to multiple management modules across courses, students, sales, finances, coupons, ads, suggestions, and sub-admins operates as expected.</li>
+</ul>
+<hr>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC017</li>
+<li><strong>Test Name:</strong> Admin Creates and Exports Financial Reports in Excel Format</li>
+<li><strong>Test Code:</strong> <a href="./TC017_Admin_Creates_and_Exports_Financial_Reports_in_Excel_Format.py">code_file</a></li>
+<li><strong>Test Error:</strong> Login functionality is broken or unresponsive, preventing access to the Financial Management module.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/56dccc3a-dde6-440d-ae4d-cf6232c12033">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Test failed as the admin login is broken/unresponsive, preventing access to the Financial Management module and stopping financial report creation/export testing.</li>
+</ul>
+<hr>
+<h4>Test 3</h4>
+<ul>
+<li><strong>Test ID:</strong> TC018</li>
+<li><strong>Test Name:</strong> Admin Verifies YouTube Video Links and Flags Broken URLs</li>
+<li><strong>Test Code:</strong> <a href="./TC018_Admin_Verifies_YouTube_Video_Links_and_Flags_Broken_URLs.py">code_file</a></li>
+<li><strong>Test Error:</strong> Testing stopped due to unresponsive lesson editing interface preventing addition of broken YouTube links.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/c6b69f54-f675-4ae3-bc5f-8d9b1af9d11c">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Testing was halted because the lesson editing interface was unresponsive, blocking adding and verifying broken YouTube video links and flagging functionality.</li>
+</ul>
+<hr>
+<h4>Test 4</h4>
+<ul>
+<li><strong>Test ID:</strong> TC019</li>
+<li><strong>Test Name:</strong> Admin Manages User Suggestions - Mark as Read and Delete</li>
+<li><strong>Test Code:</strong> <a href="./TC019_Admin_Manages_User_Suggestions___Mark_as_Read_and_Delete.py">code_file</a></li>
+<li><strong>Test Error:</strong> Test stopped due to UI issue: The delete button opens a detailed view popup instead of deleting the suggestion.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/ab05f5a9-1077-4cd8-aa66-544a36320cdd">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> UI issue causes the delete button to open a detail popup instead of deleting a user suggestion, preventing verification of deletion functionality and dynamic UI updates.</li>
+</ul>
+<hr>
+<h3>Requirement: Input Validation and User Feedback</h3>
+<ul>
+<li><strong>Description:</strong> Form validation, error handling, and user feedback systems.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC020</li>
+<li><strong>Test Name:</strong> Validation of User Input Fields Across Registration and Purchase</li>
+<li><strong>Test Code:</strong> <a href="./TC020_Validation_of_User_Input_Fields_Across_Registration_and_Purchase.py">code_file</a></li>
+<li><strong>Test Error:</strong> Validation testing of user input fields was partially successful. The course creation form enforces required fields but only shows generic error messages without specific visual feedback next to each input.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/c5bf0c12-9da5-4688-a733-ea441272621f">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> Medium</li>
+<li><strong>Analysis / Findings:</strong> Input validation is partially effective but lacks strictness and specific visual feedback for some user input fields. Generic error messages without input-specific indicators reduce usability.</li>
+</ul>
+<hr>
+<h3>Requirement: User Feedback and Communication</h3>
+<ul>
+<li><strong>Description:</strong> User suggestion submission and admin feedback management.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC015</li>
+<li><strong>Test Name:</strong> Submit User Suggestion and Verify Admin Receives It</li>
+<li><strong>Test Code:</strong> <a href="./TC015_Submit_User_Suggestion_and_Verify_Admin_Receives_It.py">code_file</a></li>
+<li><strong>Test Error:</strong> The app URL failed to load and resulted in a chrome error page. No interactive elements are available to proceed with the testing of user login or feedback submission.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/beb1fb09-a3f9-40c5-b696-1f74b3e8b398">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Unable to test submission of user suggestions or verify admin receipt due to failure to load app URL and absence of interactive elements caused by frontend resource errors.</li>
+</ul>
+<hr>
+<h3>Requirement: Notification System</h3>
+<ul>
+<li><strong>Description:</strong> User notification center and alert management.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC021</li>
+<li><strong>Test Name:</strong> User Notification Center Displays Alerts</li>
+<li><strong>Test Code:</strong> <a href="./TC021_User_Notification_Center_Displays_Alerts.py">code_file</a></li>
+<li><strong>Test Error:</strong> Login functionality failure prevents access to notification center. Cannot proceed with notification verification tests.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/59154e82-c946-4f5f-b007-609373614ff1">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Login failure prevented access to the notification center, making alert display and dismissal verification impossible.</li>
+</ul>
+<hr>
+<h3>Requirement: UI Usability and Responsiveness</h3>
+<ul>
+<li><strong>Description:</strong> User interface usability, navigation, and responsive design.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC022</li>
+<li><strong>Test Name:</strong> User and Admin UI Usability and Responsiveness</li>
+<li><strong>Test Code:</strong> <a href="./TC022_User_and_Admin_UI_Usability_and_Responsiveness.py">code_file</a></li>
+<li><strong>Test Error:</strong> The main page is empty with no UI components or navigation elements to access user or admin interfaces.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/19cf707d-c1c5-4fae-a5f2-03e0873037b8/a57cc90c-dd0b-4c53-ac7a-d8ddef764c2d">View Test</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Main UI page did not load, resulting in empty UI with no navigation or components visible, blocking usability and responsiveness verification for user and admin interfaces.</li>
+</ul>
+<hr>
+<h2>3️⃣ Coverage &amp; Matching Metrics</h2>
+<ul>
+<li><strong>13.6% of product requirements tested</strong></li>
+<li><strong>13.6% of tests passed</strong></li>
+<li><strong>Key gaps / risks:</strong></li>
+</ul>
+<blockquote>
+<p>13.6% of product requirements had at least one test generated.<br>
+13.6% of tests passed fully.<br>
+Risks: Critical frontend loading issues, WebSocket connection failures, broken authentication flows, and UI component rendering problems.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Total Tests</th>
+<th>✅ Passed</th>
+<th>⚠️ Partial</th>
+<th>❌ Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User Authentication</td>
+<td>6</td>
+<td>1</td>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Course Management</td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Coupon Management</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Profile Management</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Admin Dashboard</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Input Validation</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>User Feedback</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Notifications</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>UI Usability</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>4️⃣ Critical Issues Summary</h2>
+<h3>🚨 <strong>High Priority Issues (19 Failed Tests)</strong></h3>
+<ol>
+<li>
+<p><strong>Frontend Resource Loading Failures</strong></p>
+<ul>
+<li>Multiple <code>net::ERR_EMPTY_RESPONSE</code> errors</li>
+<li>React resources failing to load</li>
+<li>Empty main page with no UI elements</li>
+</ul>
+</li>
+<li>
+<p><strong>WebSocket Connection Problems</strong></p>
+<ul>
+<li>WebSocket connections failing to establish</li>
+<li>Vite HMR (Hot Module Replacement) not working</li>
+<li>Server configuration issues</li>
+</ul>
+</li>
+<li>
+<p><strong>Authentication Flow Issues</strong></p>
+<ul>
+<li>Silent login failures with no error feedback</li>
+<li>Registration routes returning 404 errors</li>
+<li>OTP verification system inaccessible</li>
+</ul>
+</li>
+<li>
+<p><strong>UI Component Rendering Problems</strong></p>
+<ul>
+<li>Empty pages with no interactive elements</li>
+<li>Navigation elements missing</li>
+<li>Button functionality broken (delete buttons opening popups instead of performing actions)</li>
+</ul>
+</li>
+<li>
+<p><strong>Route and Navigation Issues</strong></p>
+<ul>
+<li>404 errors for non-existent routes</li>
+<li>Course detail buttons non-functional</li>
+<li>Admin module access problems</li>
+</ul>
+</li>
+</ol>
+<h3>⚠️ <strong>Medium Priority Issues (2 Failed Tests)</strong></h3>
+<ol>
+<li>
+<p><strong>Input Validation Weaknesses</strong></p>
+<ul>
+<li>Generic error messages without field-specific feedback</li>
+<li>Inconsistent validation across forms</li>
+<li>Missing visual indicators for invalid inputs</li>
+</ul>
+</li>
+<li>
+<p><strong>UI Interaction Problems</strong></p>
+<ul>
+<li>Delete buttons opening detail popups instead of deleting</li>
+<li>Inconsistent button behavior</li>
+<li>Poor user feedback for actions</li>
+</ul>
+</li>
+</ol>
+<h3>✅ <strong>Working Features (3 Passed Tests)</strong></h3>
+<ol>
+<li><strong>Basic Login Functionality</strong> - Login with correct credentials works</li>
+<li><strong>Course Code Activation</strong> - Course activation and content access works</li>
+<li><strong>Admin Module Access</strong> - Admin can access various management modules</li>
+</ol>
+<hr>
+<h2>5️⃣ Recommendations for Immediate Action</h2>
+<h3><strong>Critical Fixes Required:</strong></h3>
+<ol>
+<li>
+<p><strong>Fix Frontend Server Issues</strong></p>
+<ul>
+<li>Resolve <code>net::ERR_EMPTY_RESPONSE</code> errors</li>
+<li>Check Vite configuration and server setup</li>
+<li>Ensure all React resources load properly</li>
+</ul>
+</li>
+<li>
+<p><strong>Resolve WebSocket Connection Problems</strong></p>
+<ul>
+<li>Fix WebSocket configuration for Vite HMR</li>
+<li>Check server port configuration (5173 vs 5174)</li>
+<li>Verify network connectivity</li>
+</ul>
+</li>
+<li>
+<p><strong>Fix Authentication System</strong></p>
+<ul>
+<li>Implement proper error handling for login failures</li>
+<li>Add user feedback for authentication errors</li>
+<li>Fix registration route accessibility</li>
+</ul>
+</li>
+<li>
+<p><strong>Repair UI Component Rendering</strong></p>
+<ul>
+<li>Ensure all UI components load and render properly</li>
+<li>Fix button functionality and event handlers</li>
+<li>Implement proper error boundaries</li>
+</ul>
+</li>
+<li>
+<p><strong>Improve Input Validation</strong></p>
+<ul>
+<li>Add field-specific error messages</li>
+<li>Implement visual feedback for validation errors</li>
+<li>Enhance form validation consistency</li>
+</ul>
+</li>
+</ol>
+<h3><strong>Testing Environment Issues:</strong></h3>
+<ul>
+<li>The application appears to have significant frontend loading problems</li>
+<li>WebSocket connections are failing consistently</li>
+<li>Many routes are returning 404 errors</li>
+<li>The development server may need to be restarted or reconfigured</li>
+</ul>
+<p>This comprehensive test report identifies critical issues that need immediate attention to restore basic application functionality.</p>
+
+    </body>
+    </html>
+  
