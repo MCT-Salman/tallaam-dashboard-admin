@@ -1,0 +1,23 @@
+[
+  {
+    "id": 123,
+    "title": "تطوير الويب المتقدّم",
+    "slug": "web-dev-adv",
+    "description": "مسار متكامل لبناء واجهات متقدمة",
+    "priceUSD": 25.0,
+    "priceSYP": 125000.0,
+    "currency": "USD",
+    "isFree": false,
+    "subjectId": 12,
+    "isActive": true,
+    "levels": [
+      { "id": 1, "name": "المستوى الأول", "order": 1 },
+      { "id": 2, "name": "المستوى الثاني", "order": 2 }
+    ],
+    "lessonsCount": 24,
+    "instructors": [{ "id": 5, "name": "د. محمد", "verified": true }],
+    "accessCodesAvailable": 120,
+    "createdAt": "2025-08-01T10:00:00Z",
+    "updatedAt": "2025-08-10T12:00:00Z"
+  }
+]

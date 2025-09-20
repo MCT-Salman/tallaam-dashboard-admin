@@ -107,6 +107,11 @@ const sidebarItems = [
     icon: Bell
   },
   {
+    title: "إعدادات الإدارة",
+    href: "/admin/settings",
+    icon: Settings
+  },
+  {
     title: "الملف الشخصي",
     href: "/profile",
     icon: User

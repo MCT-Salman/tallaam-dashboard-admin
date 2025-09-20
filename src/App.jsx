@@ -26,6 +26,9 @@ import SubAdminManagement from "./pages/admin/SubAdminManagement"
 import SuggestionsManagement from "./pages/admin/SuggestionsManagement"
 import LinkVerification from "./pages/admin/LinkVerification"
 import './app.css'
+import AccessCodes from "./pages/admin/AccessCodes"
+import { AppSettingsProvider } from "./contexts/AppSettingsContext"
+import AdminSettings from "./pages/admin/AdminSettings"
 
 const queryClient = new QueryClient()
 
@@ -34,6 +37,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <AppSettingsProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -119,6 +123,22 @@ const App = () => (
               </DashboardLayout>
             }
           />
+          <Route
+            path="/admin/access-codes"
+            element={
+              <DashboardLayout>
+                <AccessCodes />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <DashboardLayout>
+                <AdminSettings />
+              </DashboardLayout>
+            }
+          />
           {/* Legacy Routes */}
           <Route
             path="/courses"
@@ -172,6 +192,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      </AppSettingsProvider>
     </TooltipProvider>
   </QueryClientProvider>
 )
