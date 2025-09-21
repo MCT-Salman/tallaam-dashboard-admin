@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { Eye, EyeOff, Phone, Lock, GraduationCap, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -22,6 +22,7 @@ export default function Login() {
   })
   const [showCountryDropdown, setShowCountryDropdown] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
     phone: "",
@@ -52,7 +53,7 @@ export default function Login() {
 
   const handleSubmit = e => {
     e.preventDefault()
-    // Handle login logic here
+      navigate('/dashboard')
     console.log("Login attempt:", formData)
   }
 
@@ -63,21 +64,7 @@ export default function Login() {
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-secondary/20 blur-3xl" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 min-h-screen">
-        {/* Left hero panel */}
-        <div className="relative bg-primary hidden md:block">
-          <div
-            className="absolute inset-0 bg-center bg-no-repeat -top-90"
-            style={{ backgroundImage: `url(${heroImg})`}}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#000]/70 to-background/20" />
-          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-12">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl mb-6 border border-white/20">
-              <GraduationCap className="w-10 h-10 text-white" />
-            </div>
-            <h1 className="text-3xl font-bold text-white mb-3">مرحباً بك في منصة تعلّم</h1>
-            <p className="text-white/80 max-w-md">سجل دخولك للوصول إلى لوحة التحكم وإدارة المنصة بسهولة.</p>
-          </div>
-        </div>
+       
 
         {/* Right form panel */}
         <div className="flex items-center justify-center p-6 md:p-10">
@@ -198,6 +185,22 @@ export default function Login() {
               </form>
             </CardContent>
           </Card>
+        </div>
+
+         {/* Left hero panel */}
+        <div className="relative bg-primary hidden md:block">
+          <div
+            className="absolute inset-0 bg-center bg-no-repeat -top-90"
+            style={{ backgroundImage: `url(${heroImg})`}}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#000]/70 to-background/20" />
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-12">
+            {/* <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-2xl mb-6 border border-white/20">
+              <GraduationCap className="w-10 h-10 text-white" />
+            </div> */}
+            <h1 className="text-3xl font-bold text-white mb-3">مرحباً بك في منصة تعلّم</h1>
+            <p className="text-white/80 max-w-md">سجل دخولك للوصول إلى لوحة التحكم وإدارة المنصة بسهولة.</p>
+          </div>
         </div>
       </div>
     </div>

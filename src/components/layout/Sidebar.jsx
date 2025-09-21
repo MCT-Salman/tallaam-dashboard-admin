@@ -1,5 +1,5 @@
 // src\components\layout\Sidebar.jsx
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import React, { useState } from "react"
 import {
   Home,
@@ -21,7 +21,8 @@ import {
   Link as LinkIcon,
   FileText,
   ChevronUp,
-  ChevronDown
+  ChevronDown,
+  Image
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -87,6 +88,11 @@ const sidebarItems = [
     icon: Percent
   },
   {
+    title: "إدارة القصص",
+    href: "/admin/stories",
+    icon: Image
+  },
+  {
     title: "المدراء الفرعيين",
     href: "/admin/sub-admins",
     icon: UserCheck
@@ -134,6 +140,7 @@ const mainItems = [
 export function Sidebar({ collapsed, onToggle }) {
   const location = useLocation()
   const [mobileExpanded, setMobileExpanded] = useState(false)
+  const navigate = useNavigate()
 
   // إضافة class للـ body في الشاشات الصغيرة لإضافة padding-bottom
   React.useEffect(() => {
@@ -168,6 +175,10 @@ export function Sidebar({ collapsed, onToggle }) {
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
+
+  const logout = () =>{
+    navigate('/login')
+  } 
 
   return (
     <>
@@ -243,9 +254,10 @@ export function Sidebar({ collapsed, onToggle }) {
           <Button
             variant="ghost"
             className={cn(
-              "w-full justify-start gap-3 text-muted-foreground hover:text-foreground hover:bg-accent",
+              "w-full cursor-pointer justify-start gap-3 text-muted-foreground hover:text-foreground hover:bg-accent",
               collapsed && "justify-center"
             )}
+            onClick={() => logout()}
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
             {!collapsed && <span className="block">تسجيل الخروج</span>}
@@ -338,8 +350,8 @@ export function Sidebar({ collapsed, onToggle }) {
                 {/* Logout Button */}
                 <Button
                   variant="ghost"
-                  className="flex items-center gap-3 px-3 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent justify-start"
-                  onClick={() => setMobileExpanded(false)}
+                  className="flex cursor-pointer items-center gap-3 px-3 py-3 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent justify-start"
+                  onClick={() => logout()}
                 >
                   <LogOut className="w-5 h-5 flex-shrink-0" />
                   <span>تسجيل الخروج</span>

@@ -25,6 +25,7 @@ import CouponManagement from "./pages/admin/CouponManagement"
 import SubAdminManagement from "./pages/admin/SubAdminManagement"
 import SuggestionsManagement from "./pages/admin/SuggestionsManagement"
 import LinkVerification from "./pages/admin/LinkVerification"
+import StoriesManagement from "./pages/admin/StoriesManagement"
 import './app.css'
 import AccessCodes from "./pages/admin/AccessCodes"
 import { AppSettingsProvider } from "./contexts/AppSettingsContext"
@@ -112,6 +113,14 @@ const App = () => (
             element={
               <DashboardLayout>
                 <SuggestionsManagement />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/admin/stories"
+            element={
+              <DashboardLayout>
+                <StoriesManagement />
               </DashboardLayout>
             }
           />

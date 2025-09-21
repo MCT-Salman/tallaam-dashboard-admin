@@ -109,7 +109,32 @@ export const mockTransactions = [
 ]
 
 export const mockStories = [
-  { id: 1, title: "دورة جديدة", imageUrl: "/tallaam_logo.png", startedAt: "2024-04-01", endedAt: "2024-04-15", isActive: true },
+  {
+    id: 1,
+    title: "دورة البرمجة الجديدة",
+    content: "تعلم البرمجة من الصفر مع أفضل المدربين",
+    imageUrl: "/tallaam_logo.png",
+    link: "https://example.com/course/1",
+    category: "دورة",
+    expiryDate: "2024-04-15",
+    status: "نشط",
+    priority: "عادي",
+    views: 150,
+    createdAt: "2024-04-01"
+  },
+  {
+    id: 2,
+    title: "عرض خاص على الدورات",
+    content: "خصم 30% على جميع الدورات لفترة محدودة",
+    imageUrl: "/tallaam_logo2.png",
+    link: "https://example.com/offer",
+    category: "عرض خاص",
+    expiryDate: "2024-04-10",
+    status: "نشط",
+    priority: "عاجل",
+    views: 300,
+    createdAt: "2024-04-02"
+  }
 ]
 
 export const mockAdvertisements = [
